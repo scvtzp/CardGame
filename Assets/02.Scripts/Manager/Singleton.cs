@@ -12,13 +12,8 @@ namespace Manager
             {
                 if (instance == null)
                 {
-                    instance = FindObjectOfType<T>();
-
-                    if (instance == null)
-                    {
-                        GameObject gameObject = new GameObject("Controller");
-                        instance = gameObject.AddComponent<T>();
-                    }
+                    GameObject gameObject = new GameObject(typeof(T).Name);
+                    instance = gameObject.AddComponent<T>();
                 }
 
                 return instance;
