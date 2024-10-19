@@ -62,6 +62,21 @@ namespace Manager
 
             SkillDelegate[SkillDelegateType.End]?.Invoke();
         }
+
+        public void StartTurn()
+        {
+            
+        }
+        
+        public void EndTurn()
+        {
+            
+        }
+        
+        public void ChangeTurn()
+        {
+            
+        }
     }
 }
 

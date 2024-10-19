@@ -60,15 +60,19 @@ namespace DefaultNamespace
         };
         //todo: 부가효과 도대체 어케함?
 
-        private void Start()
+        public void Init()
         {
             _gameManager = GameManager.Instance;
-            _gameManager.AddSkillDelegate(SkillDelegateType.Start, () => {Debug.Log("스킬 사용 전");});
-            _gameManager.AddSkillDelegate(SkillDelegateType.Start, () => {Debug.Log("스킬 사용 전");});
+            // _gameManager.AddSkillDelegate(SkillDelegateType.Start, () => {Debug.Log("스킬 사용 전");});
 
             id = CardIDManager.Instance.GetInstanceID();
-            
             deckService.AddCard(this);
+        }
+
+        public void Init(DeckService deck)
+        {
+            deckService = deck;
+            Init();
         }
 
         public void OnDrag(PointerEventData eventData)
@@ -91,14 +95,20 @@ namespace DefaultNamespace
             
             if (_costAndTarget.GetTarget(_target, _objectType))
             {
-                spriteRendererTest.color = Color.red;
+                if(spriteRendererTest != null)
+                    spriteRendererTest.color = Color.red;
+                else
+                    Debug.Log("충돌Enter");
             }
         }
         
         private void OnTriggerExit2D(Collider2D other)
         {
             _target = null;
-            spriteRendererTest.color = Color.white;
+            if(spriteRendererTest != null)
+                spriteRendererTest.color = Color.white;
+            else
+                Debug.Log("충돌Exit");
         }
 
         //이거 드래그, 클릭 기타등등 건들기만 하면 다 적용되는데 각각 예외처리 해줘야할듯?

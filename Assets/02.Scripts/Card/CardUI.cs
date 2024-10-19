@@ -1,4 +1,7 @@
+using System;
+using UI;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace DefaultNamespace
 {
@@ -8,6 +11,12 @@ namespace DefaultNamespace
     /// </summary>
     public class CardUI : MonoBehaviour
     {
-        private DeckService _deckService;
+        [SerializeField] HandView handView;
+        [SerializeField] private DeckService deckService;
+
+        private void Start()
+        {
+            handView.SetCardSetting(deckService);
+        }
     }
 }
