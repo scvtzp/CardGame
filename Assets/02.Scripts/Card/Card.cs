@@ -121,6 +121,21 @@ namespace DefaultNamespace
         {
             if(_target == null)
                 return;
+
+            // 내 차례가 아니면 리턴. (사실상 플레이어 용이긴 한데... Team2껀 그냥 지울까?)
+            switch (_objectType)
+            {
+                case ObjectType.Team1:
+                case ObjectType.Team1Create:
+                    if(_gameManager.Turn != Turn.MyTurn)
+                        return;
+                    break;
+                case ObjectType.Team2:
+                case ObjectType.Team2Create:
+                    if(_gameManager.Turn != Turn.EnemyTurn)
+                        return;
+                    break;
+            }
             
             _gameManager.Action(this, _target);
         }

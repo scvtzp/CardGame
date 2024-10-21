@@ -19,6 +19,7 @@ namespace CardGame.Entity
         
         private void Start()
         {
+            //todo: 스포너에서 생성될때 게임매니저에 team1/2Entity에 추가시켜줘야함.
             _gameManager = GameManager.Instance;
             boxCollider.size = spriteRenderer.bounds.size;
             boxCollider.offset = spriteRenderer.bounds.center - transform.position;
@@ -45,6 +46,12 @@ namespace CardGame.Entity
         public void Kill()
         {
             Destroy(this.gameObject);
+        }
+
+        public void AutoTurn()
+        {
+            //todo: 덱 서비스를 가지고 자동 전투 구현.
+            //드로우 하고
         }
     }
 }

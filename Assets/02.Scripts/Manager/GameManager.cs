@@ -19,12 +19,22 @@ namespace Manager
         End,
     }
 
+    public enum Turn
+    {
+        MyTurn,
+        EnemyTurn,
+    }
+
     public class GameManager : Singleton<GameManager>
     {
         private Dictionary<KillType, KillDelegate> KillDelegates = new();
         private Dictionary<SkillDelegateType, VoidDelegate> SkillDelegate = new();
 
         private LinkedList<DeckService> decks = new();
+        
+        public Turn Turn { get; private set; } = Turn.MyTurn;
+        private List<Entity> team1Entity = new List<Entity>(); //아군 캐릭터들
+        private List<Entity> team2Entity = new List<Entity>(); //적 캐릭터들
         
         public GameManager()
         {
@@ -63,19 +73,30 @@ namespace Manager
             SkillDelegate[SkillDelegateType.End]?.Invoke();
         }
 
-        public void StartTurn()
-        {
-            
+        private void EndTurn() { }
+
+        private void StartTurn()
+        { 
+            //todo: 스타트/엔드 둘다 카드 액션처럼 델리게이트로 변환.
         }
-        
-        public void EndTurn()
-        {
             
-        }
-        
         public void ChangeTurn()
         {
+            Turn = Turn == Turn.MyTurn ? Turn.EnemyTurn : Turn.MyTurn;
+
+            StartTurn();
+            // 적군은 자동턴.
+            if (Turn == Turn.EnemyTurn)
+            {
+                foreach (var entity in team2Entity)
+                    entity.AutoTurn();
+                
+                EndTurn();
+                ChangeTurn(); //오토 턴 끝나면 자동으로 턴넘김.
+            }
+            //나는 그냥 냅둠. todo: 드로우는 시켜주자.
             
+            EndTurn();
         }
     }
 }
