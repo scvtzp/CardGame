@@ -6,8 +6,8 @@ namespace DefaultNamespace
     public class DeckService : MonoBehaviour
     {
         private LinkedList<Card> _deck = new ();
-        private List<Card> _hand = new ();
-        private List<Card> _trash = new ();
+        public List<Card> Hand { get; private set; }  = new();
+        public List<Card> Trash { get; private set; } = new ();
         private HashSet<double> _allCardID = new ();
         
         //todo: 핸드에 오브젝트 풀 적용시켜야함
@@ -15,16 +15,16 @@ namespace DefaultNamespace
         {
             if (_deck.Count == 0)
             {
-                if(_trash.Count == 0) //덱도 없고 버린더미도 없는 경우
+                if(Trash.Count == 0) //덱도 없고 버린더미도 없는 경우
                     return;
                 
-                foreach (var VARIABLE in _trash)
+                foreach (var VARIABLE in Trash)
                     _deck.AddLast(VARIABLE);
                 
-                _trash.Clear();
+                Trash.Clear();
             }
             
-            _hand.Add(_deck.First.Value);
+            Hand.Add(_deck.First.Value);
             _deck.RemoveFirst();
         }
 
@@ -38,8 +38,8 @@ namespace DefaultNamespace
         public void UseCard(Card card)
         {
             card.UsedCard();
-            _hand.Remove(card);
-            _trash.Add(card);
+            Hand.Remove(card);
+            Trash.Add(card);
         }
 
         public bool ContainsCard(Card card) => _allCardID.Contains(card.id);

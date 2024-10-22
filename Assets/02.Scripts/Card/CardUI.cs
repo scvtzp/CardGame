@@ -12,11 +12,15 @@ namespace DefaultNamespace
     public class CardUI : MonoBehaviour
     {
         [SerializeField] HandView handView;
+        [SerializeField] CardList cardList;
+        [SerializeField] CardList trashList;
         [SerializeField] private DeckService deckService;
 
         private void Start()
         {
             handView.SetCardSetting(deckService);
+            cardList.Init(deckService.Hand);
+            trashList.Init(deckService.Trash);
         }
     }
 }

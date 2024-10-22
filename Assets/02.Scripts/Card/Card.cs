@@ -86,6 +86,7 @@ namespace DefaultNamespace
             transform.position = worldPosition;
         }
         
+        //todo: 다른 카드와 닿는중에 몬스터 충돌하면 Trigger 씹힘. 카드에 리지디바디 빼면 됐었나?
         private void OnTriggerEnter2D(Collider2D other)
         {
             var obj = other.GetComponent<Entity>(); 
@@ -97,9 +98,9 @@ namespace DefaultNamespace
             {
                 if(spriteRendererTest != null)
                     spriteRendererTest.color = Color.red;
-                else
-                    Debug.Log("충돌Enter");
             }
+            else
+                Debug.Log("충돌시작" + other.name);
         }
         
         private void OnTriggerExit2D(Collider2D other)
@@ -107,14 +108,12 @@ namespace DefaultNamespace
             _target = null;
             if(spriteRendererTest != null)
                 spriteRendererTest.color = Color.white;
-            else
-                Debug.Log("충돌Exit");
         }
 
         //이거 드래그, 클릭 기타등등 건들기만 하면 다 적용되는데 각각 예외처리 해줘야할듯?
         public void OnPointerClick(PointerEventData eventData)
         {
-            Debug.Log("클릭");
+            //클릭했을때 액션
         }
 
         public void OnPointerUp(PointerEventData eventData)
@@ -142,8 +141,8 @@ namespace DefaultNamespace
 
         public void UsedCard()
         {
-            gameObject.SetActive(false);
-            //Destroy(this.gameObject);
+            //gameObject.SetActive(false);
+            Destroy(this.gameObject);
         }
 
         public List<ISkill> GetSkill() => _skill;
