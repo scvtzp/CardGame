@@ -20,9 +20,29 @@ namespace DefaultNamespace
             target.ChangeHp(-10);
         }
     }
-
+    
+    public class Heal : ISkill
+    {
+        public void StartSkill(Entity target)
+        {
+            target.ChangeHp(10);
+        }
+    }
+    
+    [Flags]
+    public enum TargetType
+    {
+        Me = 1<<0, //본인
+        Ally = 1<<1, //아군
+        Enemy = 1<<2, //적군
+        
+        Summoner = 1<<3, //소환된 잡몹
+    }
     public class CostAndTarget
     {
+        //todo: 지금은 적을 타게하기로 되어있는데, 다양한 타겟을 경우에 따라 조준할 수 있도록 수정 필요.
+        private TargetType targetType;
+        
         public bool GetTarget(Entity other, ObjectType type)
         {
             if (other.type != type)

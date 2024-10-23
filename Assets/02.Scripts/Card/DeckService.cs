@@ -9,6 +9,8 @@ namespace DefaultNamespace
         public List<Card> Hand { get; private set; }  = new();
         public List<Card> Trash { get; private set; } = new ();
         private HashSet<double> _allCardID = new ();
+
+        public int DrawCount = 0;
         
         //todo: 핸드에 오브젝트 풀 적용시켜야함
         public void Draw()
@@ -26,6 +28,12 @@ namespace DefaultNamespace
             
             Hand.Add(_deck.First.Value);
             _deck.RemoveFirst();
+        }
+
+        public void StartDraw()
+        {
+            for (int i = 0; i < DrawCount; i++)
+                Draw();
         }
 
         public void AddCard(Card card)

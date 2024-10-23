@@ -51,7 +51,7 @@ namespace CardGame.Entity
         public void AutoTurn()
         {
             //todo: 덱 서비스를 가지고 자동 전투 구현.
-            //드로우 하고
+            deck.StartDraw();
         }
     }
 }

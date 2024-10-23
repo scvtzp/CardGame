@@ -1,0 +1,11 @@
+ID,코스트,타겟,클래스,부가효과
+Player_1,,,,
+,1,Enemy/Me,Damage,
+,2,Enemy,Damage/Heal,
+,3,Me,Heal,
+,1,Enemy,Damage,
+Monster_1,,,,
+,1,Enemy,Damage,
+,1,Enemy,Damage,
+,1,Me,Heal,
+,1,Enemy,Damage,

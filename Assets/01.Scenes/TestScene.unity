@@ -1776,6 +1776,7 @@ GameObject:
   - component: {fileID: 8078106240631113070}
   - component: {fileID: 8078106240631113071}
   - component: {fileID: 8078106240631113072}
+  - component: {fileID: 8078106240631113073}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -2048,7 +2049,7 @@ MonoBehaviour:
   type: 2
   hp: 100
   maxhp: 100
-  deck: {fileID: 0}
+  deck: {fileID: 8078106240631113073}
 --- !u!114 &8078106240631113072
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2062,6 +2063,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hpBar: {fileID: 197161062}
+--- !u!114 &8078106240631113073
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2604957078851682983}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8831766223124b3c9121d1fe5686946b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

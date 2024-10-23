@@ -18,6 +18,7 @@ namespace UI
             _deckService = deck;
         }
         
+        //테스트용.
         public void AddCard()
         {
             var card = Instantiate(cardObj, transform);
