@@ -12,9 +12,9 @@ namespace UI
     {
         [SerializeField] private CardListScrollView scrollView;
 
-        private List<Card> _cards;
+        private List<CardData> _cards;
         
-        public void Init(List<Card> cards)
+        public void Init(List<CardData> cards)
         {
             _cards = cards;
             GetComponent<Button>().onClick.AddListener(OnPressedButton);

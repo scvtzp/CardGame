@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using UI;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -19,7 +20,7 @@ namespace DefaultNamespace
         private void Start()
         {
             handView.SetCardSetting(deckService);
-            cardList.Init(deckService.Hand);
+            cardList.Init(deckService._deck);
             trashList.Init(deckService.Trash);
         }
     }

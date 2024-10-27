@@ -11,6 +11,7 @@ namespace DefaultNamespace
     public interface ISkill
     {
         public void StartSkill(Entity target);
+        public ISkill Clone();
     }
     
     public class Damage : ISkill
@@ -18,6 +19,11 @@ namespace DefaultNamespace
         public void StartSkill(Entity target)
         {
             target.ChangeHp(-10);
+        }
+        
+        public ISkill Clone()
+        {
+            return new Damage();
         }
     }
     
@@ -27,11 +33,17 @@ namespace DefaultNamespace
         {
             target.ChangeHp(10);
         }
+        
+        public ISkill Clone()
+        {
+            return new Heal();
+        }
     }
     
     [Flags]
     public enum TargetType
     {
+        None = 0, //본인
         Me = 1<<0, //본인
         Ally = 1<<1, //아군
         Enemy = 1<<2, //적군
@@ -40,9 +52,25 @@ namespace DefaultNamespace
     }
     public class CostAndTarget
     {
+        private int _cost;
         //todo: 지금은 적을 타게하기로 되어있는데, 다양한 타겟을 경우에 따라 조준할 수 있도록 수정 필요.
-        private TargetType targetType;
+        private TargetType _targetType;
+
+        public CostAndTarget(int cost, TargetType targetType)
+        {
+            _cost = cost;
+            _targetType = targetType;
+        }
         
+        public CostAndTarget(CostAndTarget costAndTarget)
+        {
+            _cost = costAndTarget._cost;
+            _targetType = costAndTarget._targetType;
+        }
+        
+        /// <summary>
+        /// todo: 지금은 테스트용으로 오브젝트 타입 다른지만 체크중임.
+        /// </summary>
         public bool GetTarget(Entity other, ObjectType type)
         {
             if (other.type != type)
@@ -67,26 +95,19 @@ namespace DefaultNamespace
         [SerializeField] SpriteRenderer spriteRendererTest;   
         [SerializeField] DeckService deckService; //테스트용으로 직접 박아줌.   
         
-        public double id; //순차적으로 1씩 늘어나는 고유 id
+        
         public ObjectType _objectType; //카드 소유자의 타입.
         
         private GameManager _gameManager;
+        public CardData _cardData;
         private Entity _target;
-        private CostAndTarget _costAndTarget = new CostAndTarget();
-        private List<ISkill> _skill = new List<ISkill>()
-        {
-            new Damage(),
-            new Damage(),
-        };
-        //todo: 부가효과 도대체 어케함?
 
         public void Init()
         {
             _gameManager = GameManager.Instance;
             // _gameManager.AddSkillDelegate(SkillDelegateType.Start, () => {Debug.Log("스킬 사용 전");});
-
-            id = CardIDManager.Instance.GetInstanceID();
-            deckService.AddCard(this);
+            
+            deckService.AddCard(_cardData);
         }
 
         public void Init(DeckService deck)
@@ -114,7 +135,7 @@ namespace DefaultNamespace
                 return;
             _target = obj;
             
-            if (_costAndTarget.GetTarget(_target, _objectType))
+            if (_cardData.GetTarget(_target, _objectType))
             {
                 if(spriteRendererTest != null)
                     spriteRendererTest.color = Color.red;
@@ -165,6 +186,6 @@ namespace DefaultNamespace
             Destroy(this.gameObject);
         }
 
-        public List<ISkill> GetSkill() => _skill;
+        public List<ISkill> GetSkill() => _cardData.GetSkill();
     }
 }

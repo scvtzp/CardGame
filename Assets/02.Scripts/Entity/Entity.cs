@@ -1,6 +1,8 @@
+using System.Collections.Generic;
 using DefaultNamespace;
 using Manager;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace CardGame.Entity
 {
@@ -13,7 +15,7 @@ namespace CardGame.Entity
         public ObjectType type;
         public int hp = 100;
         public int maxhp = 100;
-        public DeckService deck;
+        [FormerlySerializedAs("deck")] public DeckService deckService;
 
         private GameManager _gameManager;
         
@@ -26,8 +28,8 @@ namespace CardGame.Entity
 
             entityView?.ChangeHp(hp, maxhp);
             
-            if (deck != null)
-                _gameManager.AddDeck(deck);
+            if (deckService != null)
+                _gameManager.AddDeck(deckService);
         }
         
         
@@ -51,7 +53,12 @@ namespace CardGame.Entity
         public void AutoTurn()
         {
             //todo: 덱 서비스를 가지고 자동 전투 구현.
-            deck.StartDraw();
+            deckService.StartDraw();
+        }
+
+        public void SetDeck(List<CardData> deck)
+        {
+            deckService.SetDeck(deck);
         }
     }
 }

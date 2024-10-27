@@ -5,9 +5,10 @@ namespace DefaultNamespace
 {
     public class DeckService : MonoBehaviour
     {
-        private LinkedList<Card> _deck = new ();
-        public List<Card> Hand { get; private set; }  = new();
-        public List<Card> Trash { get; private set; } = new ();
+        //성능 이슈로 LinkedList 고려 해봐야할듯.
+        public List<CardData> _deck = new ();
+        public List<CardData> Hand { get; private set; }  = new();
+        public List<CardData> Trash { get; private set; } = new ();
         private HashSet<double> _allCardID = new ();
 
         public int DrawCount = 0;
@@ -21,13 +22,13 @@ namespace DefaultNamespace
                     return;
                 
                 foreach (var VARIABLE in Trash)
-                    _deck.AddLast(VARIABLE);
+                    _deck.Add(VARIABLE);
                 
                 Trash.Clear();
             }
             
-            Hand.Add(_deck.First.Value);
-            _deck.RemoveFirst();
+            Hand.Add(_deck[^1]);
+            _deck.RemoveAt(_deck.Count - 1);
         }
 
         public void StartDraw()
@@ -36,20 +37,27 @@ namespace DefaultNamespace
                 Draw();
         }
 
-        public void AddCard(Card card)
+        public void SetDeck(List<CardData> deck)
         {
+            foreach (var card in deck)
+                AddCard(card);
+        }
+        
+        public void AddCard(CardData cardData)
+        {
+            var card = new CardData(cardData);
             _allCardID.Add(card.id);
-            _deck.AddLast(card);
-            GameUtil.ShuffleCollection<Card>(_deck);
+            _deck.Add(card);
+            GameUtil.ShuffleCollection<CardData>(_deck);
         }
         
         public void UseCard(Card card)
         {
             card.UsedCard();
-            Hand.Remove(card);
-            Trash.Add(card);
+            Hand.Remove(card._cardData);
+            Trash.Add(card._cardData);
         }
 
-        public bool ContainsCard(Card card) => _allCardID.Contains(card.id);
+        public bool ContainsCard(CardData card) => _allCardID.Contains(card.id);
     }
 }

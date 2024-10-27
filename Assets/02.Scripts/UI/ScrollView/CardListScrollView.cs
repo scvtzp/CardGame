@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace UI.ScrollView
 {
-    public class CardListScrollView : LoopScrollView<MonoBehaviour, Card>
+    public class CardListScrollView : LoopScrollView<MonoBehaviour, CardData>
     {
         
     }

@@ -48,8 +48,8 @@ namespace Manager
         
         public void KillAction(Entity obj)
         {
-            if(decks.Contains(obj.deck))
-                decks.Remove(obj.deck);
+            if(decks.Contains(obj.deckService))
+                decks.Remove(obj.deckService);
 
             obj.Kill();
             //KillDelegates[killType].Invoke();
@@ -65,7 +65,7 @@ namespace Manager
             // 덱에서 버린 더미로 이동
             foreach (var deck in decks)
             {
-                if(deck.ContainsCard(card))
+                if(deck.ContainsCard(card._cardData))
                     deck.UseCard(card);
             }
             //todo: 버린더미로 이동될 때 ~~~ 로직 추가
