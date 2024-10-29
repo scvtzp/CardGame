@@ -52,9 +52,9 @@ namespace DefaultNamespace
     }
     public class CostAndTarget
     {
-        private int _cost;
+        public int _cost { get; private set; }
         //todo: 지금은 적을 타게하기로 되어있는데, 다양한 타겟을 경우에 따라 조준할 수 있도록 수정 필요.
-        private TargetType _targetType;
+        public TargetType _targetType { get; private set; }
 
         public CostAndTarget(int cost, TargetType targetType)
         {
@@ -95,12 +95,13 @@ namespace DefaultNamespace
         [SerializeField] SpriteRenderer spriteRendererTest;   
         [SerializeField] DeckService deckService; //테스트용으로 직접 박아줌.   
         
-        
         public ObjectType _objectType; //카드 소유자의 타입.
         
         private GameManager _gameManager;
-        public CardData _cardData;
         private Entity _target;
+        
+        public CardData _cardData;
+        public CardView _cardView;
 
         public void Init()
         {
@@ -108,6 +109,7 @@ namespace DefaultNamespace
             // _gameManager.AddSkillDelegate(SkillDelegateType.Start, () => {Debug.Log("스킬 사용 전");});
             
             deckService.AddCard(_cardData);
+            _cardView?.SetView(_cardData);
         }
 
         public void Init(DeckService deck)

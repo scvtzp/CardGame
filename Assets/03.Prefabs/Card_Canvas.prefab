@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 1035129631982527181}
   - component: {fileID: 1294915911183813961}
   - component: {fileID: 8504029698756542259}
+  - component: {fileID: 978071319053686518}
   m_Layer: 0
   m_Name: Card_Canvas
   m_TagString: Untagged
@@ -60,6 +61,7 @@ MonoBehaviour:
   spriteRendererTest: {fileID: 0}
   deckService: {fileID: 0}
   _objectType: 0
+  _cardView: {fileID: 978071319053686518}
 --- !u!61 &1035129631982527181
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -140,6 +142,23 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 70479956128575318}
   m_CullTransparentMesh: 1
+--- !u!114 &978071319053686518
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 70479956128575318}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c7b363447434071b735e22f2eb5b2b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  image: {fileID: 7117796190999552883}
+  title: {fileID: 600156588044577338}
+  type: {fileID: 1365279102709902820}
+  effect: {fileID: 8780248099400588434}
+  cost: {fileID: 2089375477828086338}
 --- !u!1 &1488356961649961961
 GameObject:
   m_ObjectHideFlags: 0

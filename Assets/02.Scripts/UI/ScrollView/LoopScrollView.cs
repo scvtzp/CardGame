@@ -23,11 +23,11 @@ namespace UI.ScrollView
             //     releaseAction);
         }
         
-        //todo: 오브젝트ID를 기반으로 캐싱 작업 추가.
         public virtual void ProvideData(Transform transform, int idx)
         {
+            //todo: 오브젝트ID를 기반으로 캐싱 작업 추가. 
             //transform.Getcomponent<TCell>.UpdateData(DataList[idx]);
-            Debug.Log($"이름:{transform.name} 인덱스:{idx}");
+            //Debug.Log($"이름:{transform.name} 인덱스:{idx}");
         }
         
         public void Init(List<TDataType> dataList)

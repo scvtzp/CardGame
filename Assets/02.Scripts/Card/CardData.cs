@@ -10,7 +10,8 @@ namespace DefaultNamespace
     public class CardData
     {
         public double id; //순차적으로 1씩 늘어나는 고유 id
-        private CostAndTarget _costAndTarget;
+        public CostAndTarget _costAndTarget { get; private set; }
+
         private List<ISkill> _skill = new List<ISkill>()
         {
             new Damage(),
