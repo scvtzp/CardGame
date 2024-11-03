@@ -139,8 +139,7 @@ namespace DefaultNamespace
             
             if (_cardData.GetTarget(_target, _objectType))
             {
-                if(spriteRendererTest != null)
-                    spriteRendererTest.color = Color.red;
+                // 닿음
             }
             else
                 Debug.Log("충돌시작" + other.name);
@@ -149,8 +148,6 @@ namespace DefaultNamespace
         private void OnTriggerExit2D(Collider2D other)
         {
             _target = null;
-            if(spriteRendererTest != null)
-                spriteRendererTest.color = Color.white;
         }
 
         //이거 드래그, 클릭 기타등등 건들기만 하면 다 적용되는데 각각 예외처리 해줘야할듯?
@@ -179,6 +176,7 @@ namespace DefaultNamespace
                     break;
             }
             
+            SoundManager.Instance.PlaySfx("UseCard");
             _gameManager.Action(this, _target);
         }
 
