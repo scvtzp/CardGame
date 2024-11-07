@@ -1,0 +1,5 @@
+ID,닉네임,클래스
+card_0,데미지,Damage(5
+card_1,힐,Heal(5
+card_2,자힐+딜,Damage(5/Me^Heal(5
+card_3,딜+랜덤딜,Damage(5/Enemy^Damage(5

@@ -16,13 +16,13 @@ namespace UI
         public void SetCardSetting(DeckService deck)
         {
             _deckService = deck;
+            _deckService.OnDraw += AddCard;
         }
         
-        //테스트용.
         public void AddCard()
         {
-            var card = Instantiate(cardObj, transform);
-            card.Init(_deckService);
+            Card card = Instantiate(cardObj, transform);
+            card.Init(_deckService, _deckService.Hand[^1]); //어쩌피 방금 드로우 했으면 맨 뒤일거니까.
             _cardList.Add(card);
             SetPos();
         }

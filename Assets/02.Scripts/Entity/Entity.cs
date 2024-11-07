@@ -50,9 +50,15 @@ namespace CardGame.Entity
             Destroy(this.gameObject);
         }
 
+        ///자동 턴(내가 아닌 적이나 생성체들 AI용)
         public void AutoTurn()
         {
             //todo: 덱 서비스를 가지고 자동 전투 구현.
+            StartTurn();
+        }
+
+        public void StartTurn()
+        {
             deckService.StartDraw();
         }
 

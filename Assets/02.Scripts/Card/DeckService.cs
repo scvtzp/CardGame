@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -11,7 +12,8 @@ namespace DefaultNamespace
         public List<CardData> Trash { get; private set; } = new ();
         private HashSet<double> _allCardID = new ();
 
-        public int DrawCount = 0;
+        private int _drawCount = 1;
+        public Action OnDraw;
         
         //todo: 핸드에 오브젝트 풀 적용시켜야함
         public void Draw()
@@ -28,12 +30,13 @@ namespace DefaultNamespace
             }
             
             Hand.Add(_deck[^1]);
+            OnDraw?.Invoke();
             _deck.RemoveAt(_deck.Count - 1);
         }
 
         public void StartDraw()
         {
-            for (int i = 0; i < DrawCount; i++)
+            for (int i = 0; i < _drawCount; i++)
                 Draw();
         }
 

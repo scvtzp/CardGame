@@ -103,19 +103,14 @@ namespace DefaultNamespace
         public CardData _cardData;
         public CardView _cardView;
 
-        public void Init()
+        public void Init(DeckService deck, CardData data)
         {
             _gameManager = GameManager.Instance;
             // _gameManager.AddSkillDelegate(SkillDelegateType.Start, () => {Debug.Log("스킬 사용 전");});
             
-            deckService.AddCard(_cardData);
-            _cardView?.SetView(_cardData);
-        }
-
-        public void Init(DeckService deck)
-        {
+            _cardData = data;
             deckService = deck;
-            Init();
+            _cardView?.UpdateData(_cardData);
         }
 
         public void OnDrag(PointerEventData eventData)

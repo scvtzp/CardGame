@@ -7,7 +7,6 @@ using System.Reflection;
 
 namespace DefaultNamespace
 {
-    // 파일 이름 디폴트 덱 매니저로 하고 여기서 json으로 카드 변환. 추가까지 다 할까?
     public class DefaultDeckManager : Singleton<DefaultDeckManager>
     {
         public Dictionary<string, List<CardData>> defaultDeckSetting = new Dictionary<string, List<CardData>>();

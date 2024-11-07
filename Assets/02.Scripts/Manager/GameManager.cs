@@ -45,7 +45,15 @@ namespace Manager
         public void AddSkillDelegate(SkillDelegateType type, VoidDelegate del) => SkillDelegate[SkillDelegateType.Start] += del;
         public void ResetSkillDelegate(SkillDelegateType type) => SkillDelegate[SkillDelegateType.Start] = null;
         public void AddDeck(DeckService deck) => decks.AddLast(deck);
-        
+        public void AddEntity(Entity entity, ObjectType type)
+        {
+            //개체 생성시 델리게이트 추가?
+            if(type == ObjectType.Team1 || type == ObjectType.Team1Create)
+                team1Entity.Add(entity);
+            if(type == ObjectType.Team2 || type == ObjectType.Team2Create)
+                team2Entity.Add(entity);
+        }
+
         public void KillAction(Entity obj)
         {
             if(decks.Contains(obj.deckService))
@@ -73,7 +81,10 @@ namespace Manager
             SkillDelegate[SkillDelegateType.End]?.Invoke();
         }
 
-        private void EndTurn() { }
+        public void EndTurn()
+        {
+            ChangeTurn();
+        }
 
         private void StartTurn()
         { 
@@ -92,11 +103,14 @@ namespace Manager
                     entity.AutoTurn();
                 
                 EndTurn();
-                ChangeTurn(); //오토 턴 끝나면 자동으로 턴넘김.
+                return;
             }
             //나는 그냥 냅둠. todo: 드로우는 시켜주자.
-            
-            EndTurn();
+            else
+            {
+                foreach (var entity in team1Entity)
+                    entity.StartTurn();
+            }
         }
     }
 }

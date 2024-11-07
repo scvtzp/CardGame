@@ -15,6 +15,8 @@ namespace Manager
         {
             player.SetDeck(DefaultDeckManager.Instance.defaultDeckSetting["Player_1"]);
             Instantiate(monster, new Vector3(5.17f, -1.23f, 0), Quaternion.identity).SetDeck(DefaultDeckManager.Instance.defaultDeckSetting["Monster_1"]);
+            GameManager.Instance.AddEntity(player, ObjectType.Team1);
+            GameManager.Instance.AddEntity(monster, ObjectType.Team2);
         }
 
         private void SetDeck(Entity entity, string id)

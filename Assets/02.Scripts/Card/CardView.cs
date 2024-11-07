@@ -12,7 +12,7 @@ namespace DefaultNamespace
         [SerializeField] private TextMeshProUGUI effect;
         [SerializeField] private TextMeshProUGUI cost;
 
-        public void SetView(CardData cardData)
+        public void UpdateData(CardData cardData)
         {
             // todo: 카드의 "이름"필요. ex)흡혈충(Damage(3)/Heal(3)) 이런식으로 매핑 필요.
             // 이름으로 이미지와 타이틀 지정.
