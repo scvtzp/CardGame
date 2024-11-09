@@ -4,18 +4,23 @@ using Manager;
 using UnityEngine;
 using System.Linq;
 using System.Reflection;
+using UnityEngine.UIElements;
 
 namespace DefaultNamespace
 {
     public class DefaultDeckManager : Singleton<DefaultDeckManager>
     {
-        public Dictionary<string, List<CardData>> defaultDeckSetting = new Dictionary<string, List<CardData>>();
+        public Dictionary<string, List<CardData>> defaultDeckSetting = new();
         
-        private Dictionary<string, Type> typeCache = new Dictionary<string, Type>();
-        private Dictionary<Tuple<string, Type[]>, ConstructorInfo> constructorCache = new Dictionary<Tuple<string, Type[]>, ConstructorInfo>();
+        private Dictionary<string, Type> typeCache = new();
+        private Dictionary<Tuple<string, Type[]>, ConstructorInfo> constructorCache = new();
+
+        private Dictionary<string, List<ISkill>> cardBody = new();
         
         public void Start()
         {
+            LoadCardBody();
+            
             //데이터 형식: id, 코스트, 타겟, 스킬, 부가효과
             TextAsset csvFile = Resources.Load<TextAsset>("DefaultDeckSetting");
             string[] lines = csvFile.text.Split('\n');
@@ -47,6 +52,69 @@ namespace DefaultNamespace
                     CardData cardData = new CardData(cost, target, skills);
                     defaultDeckSetting[id].Add(cardData);
                 }
+            }
+        }
+
+        /// <summary>
+        /// 파일 형식 
+        /// 1. 클래스는 /로 구분. 
+        /// 2. 매개변수들은 클래스명 뒤에 (속에 ,로 구분해서 넣음
+        /// 3. 고정 타겟은 클래스명 앞에 ^로 구분하여 넣음. (속에 ,로 구분해서 넣음
+        ///
+        /// 최종 예시 : 타겟^클래스(매개변수1,매개변수2/클래스(매개변수1
+        /// </summary>
+        private void LoadCardBody()
+        {
+            TextAsset csvFile = Resources.Load<TextAsset>("CardSetting");
+            string[] lines = csvFile.text.Split('\n');
+            
+            for (var index = 1; index < lines.Length; index++) //인덱스 0은 맨 윗줄. (id, 닉네임, 클래스 써있는곳)
+            {
+                string[] columns = lines[index].Split(',');
+                List<ISkill> action = new List<ISkill>();
+                foreach (var str in columns[2].Split('/'))
+                {
+                    string className = str;
+                    TargetType target = TargetType.None;
+                    int[] param = null;
+                    if (str.Contains('^'))
+                    {
+                        foreach (var v in str.Split('^')[0].Split(','))
+                            target |= Enum.Parse<TargetType>(v);
+                        
+                        className = className.Split('^')[1];
+                    }
+                    if (str.Contains('('))
+                    {
+                        var paramString = str.Split('(')[1].Split(',');
+                        param = new int[paramString.Length];
+                        for (var i = 0; i < paramString.Length; i++)
+                        {
+                            var s = paramString[i];
+                            param[i] = int.Parse(s);
+                        }
+                        
+                        className = className.Split('(')[0];
+                    }
+                    
+                    //생성
+                    if (target != TargetType.None)
+                    {
+                        if(param != null)
+                            action.Add((ISkill)InstantiateClassByName(className, target, param));
+                        else
+                            action.Add((ISkill)InstantiateClassByName(className, target));
+                    }
+                    else
+                    {
+                        if(param != null)
+                            action.Add((ISkill)InstantiateClassByName(className, param));
+                        else
+                            action.Add((ISkill)InstantiateClassByName(className));
+                    }
+                }
+
+                cardBody.Add(columns[0], action);
             }
         }
 

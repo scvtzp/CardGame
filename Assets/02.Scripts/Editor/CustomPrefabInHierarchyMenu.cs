@@ -41,7 +41,7 @@ namespace Editor
                     instance.transform.position = Vector3.zero;
             }
 
-            // 생성된 오브젝트를 선택 상태로
+            // 생성된 오브젝트를 선택 상태
             Selection.activeObject = instance;
         }
 

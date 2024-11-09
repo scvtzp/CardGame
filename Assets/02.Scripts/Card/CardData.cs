@@ -12,12 +12,7 @@ namespace DefaultNamespace
         public double id; //순차적으로 1씩 늘어나는 고유 id
         public CostAndTarget _costAndTarget { get; private set; }
 
-        private List<ISkill> _skill = new List<ISkill>()
-        {
-            new Damage(),
-            new Damage(),
-            new Heal(),
-        };
+        private List<ISkill> _skill = new();
         //todo: 부가효과 도대체 어케함?
 
         public CardData()
