@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using DefaultNamespace;
 using CardGame.Entity;
 using UnityEngine;
+using Generics;
 
 namespace Manager
 {
@@ -59,10 +60,21 @@ namespace Manager
             if(decks.Contains(obj.deckService))
                 decks.Remove(obj.deckService);
 
+            if (team1Entity.Contains(obj))
+                team1Entity.Remove(obj);
+            else if (team2Entity.Contains(obj))
+                team2Entity.Remove(obj);
+            else 
+                Debug.LogError(obj.name + "어떤 팀에도 속해있지 않습니다");
+            
             obj.Kill();
+            StageCheck();
             //KillDelegates[killType].Invoke();
         }
 
+        /// <summary>
+        /// 카드 사용 로직
+        /// </summary>
         public void Action(Card card, Entity target)
         {
             SkillDelegate[SkillDelegateType.Start]?.Invoke();
@@ -77,7 +89,7 @@ namespace Manager
                     deck.UseCard(card);
             }
             //todo: 버린더미로 이동될 때 ~~~ 로직 추가
-
+            
             SkillDelegate[SkillDelegateType.End]?.Invoke();
         }
 
@@ -110,6 +122,21 @@ namespace Manager
             {
                 foreach (var entity in team1Entity)
                     entity.StartTurn();
+            }
+        }
+        
+        //스테이지 관련 코드
+        public void StageCheck()
+        {
+            if (team1Entity.Count == 0)
+            {
+                Debug.LogError("플레이에 패배");
+            }
+            else if (team2Entity.Count == 0)
+            {
+                //보상 추가
+
+                StageManager.Instance.ChangeStage();
             }
         }
     }

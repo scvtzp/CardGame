@@ -8,9 +8,6 @@ namespace UI
     {
         [SerializeField] private Card cardObj;
 
-        private List<Card> _cardList = new();
-
-        private Card cardSetting = new Card();
         private DeckService _deckService;
         
         public void SetCardSetting(DeckService deck)
@@ -23,17 +20,15 @@ namespace UI
         {
             Card card = Instantiate(cardObj, transform);
             card.Init(_deckService, _deckService.Hand[^1]); //어쩌피 방금 드로우 했으면 맨 뒤일거니까.
-            _cardList.Add(card);
             SetPos();
         }
 
         public void SetPos()
         {
-            for (var index = 0; index < _cardList.Count; index++)
+            for (var index = 0; index < transform.childCount; index++)
             {
-                var transform = _cardList[index].GetComponent<RectTransform>();
-
-                transform.anchoredPosition = new Vector2((index-_cardList.Count/2)*100,134);
+                var childTransform = transform.GetChild(index).GetComponent<RectTransform>();
+                childTransform.anchoredPosition = new Vector2((index-transform.childCount/2)*100,134);
             }
         }
     }

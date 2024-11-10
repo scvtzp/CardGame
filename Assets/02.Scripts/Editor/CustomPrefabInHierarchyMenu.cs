@@ -40,6 +40,9 @@ namespace Editor
                 else
                     instance.transform.position = Vector3.zero;
             }
+            
+            //캔버스 스케일이 0.001이러니까 생성될때 월드기준 1 맞추려고 localScale이 100돼서 무조건 1로 고정.
+            instance.transform.localScale = Vector3.one;
 
             // 생성된 오브젝트를 선택 상태
             Selection.activeObject = instance;
@@ -47,10 +50,10 @@ namespace Editor
 
         //프리팹 생성 메뉴
         [MenuItem(menuPath + "Button", false, 0)]
-        private static void InstantiateAPrefab()
-        {
-            InstantiatePrefabInScene($"{filePath}Button.prefab");
-        }
+        private static void InstantiateAPrefab() => InstantiatePrefabInScene($"{filePath}Button.prefab");
+        
+        [MenuItem(menuPath + "Dimming", false, 0)]
+        private static void InstantiateDimmingPrefab() => InstantiatePrefabInScene($"{filePath}Dimming.prefab");
     }
 
 }

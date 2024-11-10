@@ -1,3 +1,5 @@
+using Generics;
+
 namespace Manager
 {
     public class CardIDManager : Singleton<GameManager>

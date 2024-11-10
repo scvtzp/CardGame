@@ -13,8 +13,8 @@ namespace CardGame.Entity
         [SerializeField] private EntityView entityView;
         
         public ObjectType type;
-        public int hp = 100;
-        public int maxhp = 100;
+        public int hp = 10;
+        public int maxhp = 10;
         [FormerlySerializedAs("deck")] public DeckService deckService;
 
         private GameManager _gameManager;

@@ -150,8 +150,8 @@ MonoBehaviour:
   spriteRenderer: {fileID: 7593505671197136433}
   entityView: {fileID: 3722662445874842365}
   type: 2
-  hp: 100
-  maxhp: 100
+  hp: 10
+  maxhp: 10
   deckService: {fileID: 4139776299266687413}
 --- !u!114 &3722662445874842365
 MonoBehaviour:
@@ -178,7 +178,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8831766223124b3c9121d1fe5686946b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DrawCount: 0
 --- !u!1001 &5302357352494343510
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -9,5 +9,10 @@ namespace Scene
         {
             SceneManager.LoadScene("InGameScene");
         }
+
+        public void OnPressedExitButton()
+        {
+            Application.Quit();
+        }
     }
 }

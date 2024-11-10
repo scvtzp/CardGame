@@ -1,10 +1,9 @@
 using System;
 using System.Collections.Generic;
-using Manager;
 using UnityEngine;
 using System.Linq;
 using System.Reflection;
-using UnityEngine.UIElements;
+using Generics;
 
 namespace DefaultNamespace
 {
@@ -20,39 +19,7 @@ namespace DefaultNamespace
         public void Start()
         {
             LoadCardBody();
-            
-            //데이터 형식: id, 코스트, 타겟, 스킬, 부가효과
-            TextAsset csvFile = Resources.Load<TextAsset>("DefaultDeckSetting");
-            string[] lines = csvFile.text.Split('\n');
-
-            string id = "";
-            foreach (string line in lines)
-            {
-                string[] columns = line.Split(',');
-
-                // 첫칸에 값이 있음 = 카드 Id라는 뜻.
-                // 이 이후로 다음 id가 등장하기 전까지의 모든 줄이 각각 하나의 카드.
-                if (columns[0] != "")
-                {
-                    id = columns[0];
-                    defaultDeckSetting.Add(id, new List<CardData>());
-                }
-                else
-                {
-                    int cost = int.Parse(columns[1]);
-
-                    TargetType target = TargetType.None;
-                    foreach (var type in columns[2].Split('/'))
-                        target |= Enum.Parse<TargetType>(type);
-
-                    List<ISkill> skills = new List<ISkill>();
-                    foreach (var skill in columns[3].Split('/'))
-                        skills.Add((ISkill)InstantiateClassByName(skill));
-                    
-                    CardData cardData = new CardData(cost, target, skills);
-                    defaultDeckSetting[id].Add(cardData);
-                }
-            }
+            LoadEntityDefaultDeck();
         }
 
         /// <summary>
@@ -118,6 +85,41 @@ namespace DefaultNamespace
             }
         }
 
+        private void LoadEntityDefaultDeck()
+        {
+            //데이터 형식: id, 코스트, 타겟, 스킬, 부가효과
+            TextAsset csvFile = Resources.Load<TextAsset>("DefaultDeckSetting");
+            string[] lines = csvFile.text.Split('\n');
+
+            string id = "";
+            for (var i = 1; i < lines.Length; i++) //0번은 헤더라서 뺌.
+            {
+                var line = lines[i];
+                string[] columns = line.Split(',');
+
+                // 첫칸에 값이 있음 = 카드 Id라는 뜻.
+                // 이 이후로 다음 id가 등장하기 전까지의 모든 줄이 각각 하나의 카드.
+                if (columns[0] != "")
+                {
+                    id = columns[0];
+                    defaultDeckSetting.Add(id, new List<CardData>());
+                }
+                else
+                {
+                    int cost = int.Parse(columns[1]);
+
+                    TargetType target = TargetType.None;
+                    foreach (var type in columns[2].Split('/'))
+                        target |= Enum.Parse<TargetType>(type);
+
+                    List<ISkill> skills = cardBody[columns[3]];
+
+                    CardData cardData = new CardData(cost, target, skills, columns[3]);
+                    defaultDeckSetting[id].Add(cardData);
+                }
+            }
+        }
+        
         private object InstantiateClassByName(string className, params object[] parameters)
         {
             if (!typeCache.TryGetValue(className, out Type type))
