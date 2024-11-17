@@ -1,5 +1,5 @@
+using Manager.Generics;
 using R3;
-using Generics;
 
 namespace DefaultNamespace
 {

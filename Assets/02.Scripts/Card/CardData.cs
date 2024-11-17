@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using CardGame.Entity;
 using Manager;
+using Skill;
 
 namespace DefaultNamespace
 {

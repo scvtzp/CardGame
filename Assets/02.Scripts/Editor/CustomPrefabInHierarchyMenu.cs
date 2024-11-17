@@ -5,7 +5,7 @@ namespace Editor
 {
     public class CustomPrefabInHierarchyMenu
     {
-        private const string menuPath = "GameObject/Instantiate Prefabs/";
+        private const string menuPath = "GameObject/UI 프리팹/";
         private const string filePath = "Assets/03.Prefabs/Default/";
 
         // 공통 프리팹 생성 함수, 선택된 부모 오브젝트에 따라 위치를 설정
@@ -54,6 +54,12 @@ namespace Editor
         
         [MenuItem(menuPath + "Dimming", false, 0)]
         private static void InstantiateDimmingPrefab() => InstantiatePrefabInScene($"{filePath}Dimming.prefab");
+        
+        [MenuItem(menuPath + "LoopScrollView", false, 0)]
+        private static void InstantiatePrefab_LoopScrollView() => InstantiatePrefabInScene($"{filePath}LoopScrollView.prefab");
+        
+        [MenuItem(menuPath + "TextBold", false, 0)]
+        private static void InstantiatePrefab_TextBold() => InstantiatePrefabInScene($"{filePath}TextBold.prefab");
     }
 
 }

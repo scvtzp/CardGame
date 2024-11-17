@@ -1,4 +1,4 @@
-namespace Generics
+namespace Manager.Generics
 {
     public class NonMonoSingleton<T> where T : class, new()
     {

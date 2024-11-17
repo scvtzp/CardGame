@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Generics
+namespace Manager.Generics
 {
     public class Singleton<T> : MonoBehaviour where T : Component
     {
@@ -20,7 +20,7 @@ namespace Generics
             }
         }
 
-        public void Awake()
+        public virtual void Awake()
         {
             DontDestroyOnLoad(gameObject);
 

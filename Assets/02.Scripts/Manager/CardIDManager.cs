@@ -1,4 +1,4 @@
-using Generics;
+using Manager.Generics;
 
 namespace Manager
 {

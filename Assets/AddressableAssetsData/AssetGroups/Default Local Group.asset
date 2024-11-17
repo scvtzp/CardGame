@@ -13,10 +13,13 @@ MonoBehaviour:
   m_Name: Default Local Group
   m_EditorClassIdentifier: 
   m_GroupName: Default Local Group
-  m_Data:
-    m_SerializedData: []
   m_GUID: ae81efaf5f0e0c343a413507e7d49665
   m_SerializeEntries:
+  - m_GUID: 322d67e613fd2a74685b2dbf458aca11
+    m_Address: Assets/03.Prefabs/View
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: b6a05a55bc8dfe848b429d2563decf0d
     m_Address: Assets/05.Sounds
     m_ReadOnly: 0

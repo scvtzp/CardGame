@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using System.Reflection;
-using Generics;
+using Manager.Generics;
+using Skill;
 
 namespace DefaultNamespace
 {
@@ -124,7 +125,7 @@ namespace DefaultNamespace
         {
             if (!typeCache.TryGetValue(className, out Type type))
             {
-                type = Type.GetType($"DefaultNamespace.{className}");
+                type = Type.GetType($"Skill.{className}"); //혹시 여기(Skill.) 네임스페이스 바뀌면 바꿔줘야함.
                 typeCache[className] = type;
             }
 

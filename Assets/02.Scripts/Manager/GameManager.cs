@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using DefaultNamespace;
 using CardGame.Entity;
 using UnityEngine;
-using Generics;
+using Manager.Generics;
 
 namespace Manager
 {
