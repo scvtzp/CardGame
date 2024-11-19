@@ -27,5 +27,6 @@ namespace Skill
 
         public abstract void StartSkill(Entity target);
         public abstract ISkill Clone();
+        public int[] GetValues() => Values;
     }
 }

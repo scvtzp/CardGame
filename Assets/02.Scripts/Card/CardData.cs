@@ -19,6 +19,9 @@ namespace DefaultNamespace
 
         public CardData()
         {
+            CardId = "";
+            _costAndTarget = null;
+            _skill = null;
         }
         
         public CardData(int cost, TargetType targetType, List<ISkill> skill, string cardId)
