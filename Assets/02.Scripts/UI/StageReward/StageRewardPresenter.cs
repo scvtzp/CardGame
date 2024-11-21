@@ -35,7 +35,7 @@ namespace UI.StageReward
 
         public void GetReward(int index)
         {
-            PlayerModel.Instance.Gold.Value -= _rewards[index].Count;
+            ItemManager.Instance.GetItem(_rewards[index]);
             ViewManager.Instance.HideView<StageRewardView>();
         }
     }

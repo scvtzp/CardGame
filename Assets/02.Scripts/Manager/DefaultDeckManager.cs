@@ -15,7 +15,7 @@ namespace DefaultNamespace
         private Dictionary<string, Type> typeCache = new();
         private Dictionary<Tuple<string, Type[]>, ConstructorInfo> constructorCache = new();
 
-        private Dictionary<string, List<ISkill>> cardBody = new();
+        public Dictionary<string, List<ISkill>> cardBody = new();
         
         public void Start()
         {

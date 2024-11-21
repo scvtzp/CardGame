@@ -11,31 +11,37 @@ namespace UI.CardMacker
         [SerializeField] private CardView cardView;
         [SerializeField] private RectTransform cardParentTransform;
 
+        private CardMakerPresenter _presenter;
+        
         private List<CardData> _cardDatas = new List<CardData>();
         private List<CardView> _cardViews = new List<CardView>();
-        
-        //todo: 유물 등으로 이 카드 생성 갯수 조절 필요
-        private int AAAtodoAAA = 2;
 
         public override void Init()
         {
+            _presenter = new CardMakerPresenter(this);
+            
             _cardViews.Clear();
-            for (int i = 0; i < AAAtodoAAA; i++)
+        }
+
+        public void MakeCard(int count)
+        {
+            for (int i = _cardViews.Count; i < count; i++)
             {
-                _cardViews.Add(Instantiate(cardView, cardParentTransform));
-                _cardViews[i].gameObject.AddComponent<Button>().onClick.AddListener(AddData);
+                int index = i; //람다 클로저(closure) 문제 방지용 변수
                 _cardDatas.Add(new CardData());
+                _cardViews.Add(Instantiate(cardView, cardParentTransform));
+                _cardViews[i].gameObject.AddComponent<Button>().onClick.AddListener(()=>_presenter.SetCard(_cardDatas[index]));
             }
         }
 
-        private void AddData()
+        public override void ShowStart()
         {
-            
+            UpdateData();
         }
         
         public void UpdateData()
         {
-            for (int i = 0; i < AAAtodoAAA; i++)
+            for (int i = 0; i < _cardViews.Count; i++)
                 _cardViews[i].UpdateData(_cardDatas[i]);
         }
     }

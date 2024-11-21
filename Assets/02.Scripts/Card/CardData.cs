@@ -13,7 +13,6 @@ namespace DefaultNamespace
         public double id; //순차적으로 1씩 늘어나는 객체별 고유 id
         public readonly string CardId; //카드 자체 id
         public CostAndTarget _costAndTarget { get; private set; }
-
         private List<ISkill> _skill = new();
         //todo: 부가효과 도대체 어케함?
 
@@ -42,6 +41,15 @@ namespace DefaultNamespace
         public bool GetTarget(Entity target, ObjectType objectType)
         {
             return _costAndTarget.GetTarget(target, objectType);
+        }
+
+        public void Set(CostAndTarget target)
+        {
+            _costAndTarget = target;
+        }
+        public void Set(List<ISkill> skill)
+        {
+            _skill = skill;
         }
 
         public List<ISkill> GetSkill() => _skill;

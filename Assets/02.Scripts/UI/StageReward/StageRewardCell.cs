@@ -8,8 +8,8 @@ namespace UI.StageReward
 {
     public class ItemData
     {
-        public string Id;
-        public int Count;
+        public readonly string Id;
+        public readonly int Count;
 
         public ItemData(string id, int count)
         {

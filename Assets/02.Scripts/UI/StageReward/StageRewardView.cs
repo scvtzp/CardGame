@@ -16,7 +16,7 @@ namespace UI.StageReward
             _presenter = new StageRewardPresenter(this);
             scrollView.PreInit(_presenter);
         }
-
+        
         public override void ShowStart()
         {
             base.ShowStart();
