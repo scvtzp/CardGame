@@ -1,0 +1,5 @@
+ID,코스트,타겟
+cost_0,1,Enemy/Me
+cost_1,2,Enemy
+cost_2,3,Me
+cost_3,0,Enemy

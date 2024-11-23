@@ -16,11 +16,29 @@ namespace DefaultNamespace
         private Dictionary<Tuple<string, Type[]>, ConstructorInfo> constructorCache = new();
 
         public Dictionary<string, List<ISkill>> cardBody = new();
+        public Dictionary<string, CostAndTarget> cardCost = new();
         
         public void Start()
         {
+            LoadCardCost();
             LoadCardBody();
             LoadEntityDefaultDeck();
+        }
+
+        private void LoadCardCost()
+        {
+            TextAsset csvFile = Resources.Load<TextAsset>("CostSetting");
+            string[] lines = csvFile.text.Split('\n');
+            
+            for (var index = 1; index < lines.Length; index++) //인덱스 0은 맨 윗줄. (id, 닉네임, 클래스 써있는곳)
+            {
+                string[] columns = lines[index].Split(',');
+                TargetType target = TargetType.None;
+                foreach (var str in columns[2].Split('/'))
+                    target |= Enum.Parse<TargetType>(str);
+                
+                cardCost.Add(columns[0], new CostAndTarget(int.Parse(columns[1]), target));
+            }
         }
 
         /// <summary>
