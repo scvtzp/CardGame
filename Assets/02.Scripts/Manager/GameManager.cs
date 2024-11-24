@@ -32,6 +32,7 @@ namespace Manager
         private Dictionary<SkillDelegateType, VoidDelegate> SkillDelegate = new();
 
         private LinkedList<DeckService> decks = new();
+        public DeckService playerDeck;
         
         public Turn Turn { get; private set; } = Turn.MyTurn;
         private List<Entity> team1Entity = new List<Entity>(); //아군 캐릭터들

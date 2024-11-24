@@ -2,6 +2,7 @@ using DefaultNamespace;
 using Manager.Generics;
 using UI.CardMacker;
 using UI.StageReward;
+using UnityEngine;
 
 namespace Manager
 {
@@ -18,13 +19,25 @@ namespace Manager
             }
             else
             {
-                PlayerModel.Instance.Gold.Value -= data.Count;
+                PlayerModel.Instance.Gold.Value -= data.Count; //todo: 카운트가 아니라 price여야할거같은데?
             }
         }
 
         public void SetPart(CardData data)
         {
-            data.Set(DefaultDeckManager.Instance.cardBody[_itemData.Id]);
+            if (_itemData == null)
+            {
+                Debug.LogError("SetPart 실패. _itemData가 null입니다.");
+                return;
+            }
+            data.Set(_itemData.Id);
+            
+            if (data.isSetDone())
+            {
+                GameManager.Instance.playerDeck.AddCard(data);
+                data.Reset();
+            }
+            _itemData = null;
         }
     }
 }

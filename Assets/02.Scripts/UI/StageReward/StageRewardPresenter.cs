@@ -26,8 +26,8 @@ namespace UI.StageReward
         {
             _rewards = new List<ItemData>();
             _rewards.Add(new ItemData("A", -100));
-            _rewards.Add(new ItemData("B", 1));
-            _rewards.Add(new ItemData("C", 1));
+            _rewards.Add(new ItemData("part_card_0", 1));
+            _rewards.Add(new ItemData("part_cost_0", 1));
             _rewards.Add(new ItemData("D", 1));
             
             return _rewards;

@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using DefaultNamespace;
+using Manager;
 using UI.UIBase;
 using UnityEngine;
 using UnityEngine.UI;
@@ -19,8 +20,7 @@ namespace UI.CardMacker
         public override void Init()
         {
             _presenter = new CardMakerPresenter(this);
-            
-            _cardViews.Clear();
+            _presenter.Init();
         }
 
         public void MakeCard(int count)
@@ -30,7 +30,7 @@ namespace UI.CardMacker
                 int index = i; //람다 클로저(closure) 문제 방지용 변수
                 _cardDatas.Add(new CardData());
                 _cardViews.Add(Instantiate(cardView, cardParentTransform));
-                _cardViews[i].gameObject.AddComponent<Button>().onClick.AddListener(()=>_presenter.SetCard(_cardDatas[index]));
+                _cardViews[i].gameObject.GetComponent<Button>().onClick.AddListener(()=>_presenter.SetCard(_cardDatas[index]));
             }
         }
 
@@ -43,6 +43,11 @@ namespace UI.CardMacker
         {
             for (int i = 0; i < _cardViews.Count; i++)
                 _cardViews[i].UpdateData(_cardDatas[i]);
+        }
+
+        public void OnPressedBackKey()
+        {
+            ViewManager.Instance.HideView<CardMakerView>();
         }
     }
 }

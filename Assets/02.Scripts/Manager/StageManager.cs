@@ -19,6 +19,7 @@ namespace Manager
         {
             player.SetDeck(DefaultDeckManager.Instance.defaultDeckSetting["Player_1"]);
             GameManager.Instance.AddEntity(player, ObjectType.Team1);
+            GameManager.Instance.playerDeck = player.deckService;
 
             StartNewStage();
         }

@@ -11,16 +11,14 @@ namespace DefaultNamespace
     public class CardData
     {
         public double id; //순차적으로 1씩 늘어나는 객체별 고유 id
-        public readonly string CardId; //카드 자체 id
+        public string CardId; //카드 자체 id
         public CostAndTarget _costAndTarget { get; private set; }
         private List<ISkill> _skill = new();
         //todo: 부가효과 도대체 어케함?
 
         public CardData()
         {
-            CardId = "";
-            _costAndTarget = null;
-            _skill = null;
+            Reset();
         }
         
         public CardData(int cost, TargetType targetType, List<ISkill> skill, string cardId)
@@ -37,12 +35,20 @@ namespace DefaultNamespace
             _skill = cardData._skill.Select(skill => skill.Clone()).ToList();
             CardId = cardData.CardId;
         }
+
+        public void Reset()
+        {
+            CardId = "";
+            _costAndTarget = null;
+            _skill = null;
+        }
         
         public bool GetTarget(Entity target, ObjectType objectType)
         {
             return _costAndTarget.GetTarget(target, objectType);
         }
 
+        //todo: 덮어쓰기 할건지 물어보기.
         public void Set(CostAndTarget target)
         {
             _costAndTarget = target;
@@ -51,6 +57,21 @@ namespace DefaultNamespace
         {
             _skill = skill;
         }
+
+        public void Set(string id)
+        {
+            id = id.Replace("part_", "");
+
+            if (DefaultDeckManager.Instance.cardBody.ContainsKey(id))
+            {
+                CardId = id;
+                Set(DefaultDeckManager.Instance.cardBody[id]);
+            }
+            if(DefaultDeckManager.Instance.cardCost.ContainsKey(id))
+                Set(DefaultDeckManager.Instance.cardCost[id]);
+        }
+        
+        public bool isSetDone() => _costAndTarget != null && _skill != null;
 
         public List<ISkill> GetSkill() => _skill;
     }

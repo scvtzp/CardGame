@@ -36,7 +36,7 @@ namespace DefaultNamespace
             if (cardData.GetSkill() != null)
             {
                 foreach (var skill in cardData.GetSkill())
-                    effectStr += nameof(skill);
+                    effectStr += skill.GetType().Name +"\n";
             }
             effect.text = effectStr;
         }
