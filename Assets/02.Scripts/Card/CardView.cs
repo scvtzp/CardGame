@@ -1,3 +1,4 @@
+using I2.Loc;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -7,7 +8,7 @@ namespace DefaultNamespace
     public class CardView : MonoBehaviour
     {
         [SerializeField] private Image image;
-        [SerializeField] private TextMeshProUGUI title;
+        [SerializeField] private Localize title;
         [SerializeField] private TextMeshProUGUI type;
         [SerializeField] private TextMeshProUGUI effect;
         [SerializeField] private TextMeshProUGUI cost;
@@ -19,7 +20,8 @@ namespace DefaultNamespace
             // 이름으로 이미지와 타이틀 지정.
             // 타입은 슬더스 형식이라 일단 뒀는데 아마 나중에 빠지지 않을까? 싶네.
             
-            title.text = cardData.CardId;
+            title.SetTerm(cardData.CardId);
+            title.OnLocalize(); // 즉시 업데이트
 
             if (cardData._costAndTarget != null)
             {
