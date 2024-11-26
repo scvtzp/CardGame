@@ -579,6 +579,7 @@ GameObject:
   - component: {fileID: 420096186}
   - component: {fileID: 420096188}
   - component: {fileID: 420096187}
+  - component: {fileID: 420096189}
   m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -625,7 +626,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\uD134 \uC885\uB8CC"
+  m_text: aaaa
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: afb0395a49bdb014b9be76753c3572b4, type: 2}
   m_sharedMaterial: {fileID: -6530100632492371963, guid: afb0395a49bdb014b9be76753c3572b4, type: 2}
@@ -704,6 +705,45 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 420096185}
   m_CullTransparentMesh: 1
+--- !u!114 &420096189
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 420096185}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 344445a89b4f74a0e9a0a766903df87e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mTerm: "\uD134 \uC885\uB8CC"
+  mTermSecondary: '-'
+  PrimaryTermModifier: 0
+  SecondaryTermModifier: 0
+  TermPrefix: 
+  TermSuffix: 
+  LocalizeOnAwake: 1
+  IgnoreRTL: 0
+  MaxCharactersInRTL: 0
+  IgnoreNumbersInRTL: 1
+  CorrectAlignmentForRTL: 1
+  AddSpacesToJoinedLanguages: 0
+  AllowLocalizedParameters: 1
+  AllowParameters: 1
+  TranslatedObjects: []
+  LocalizeEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  AlwaysForceLocalize: 0
+  LocalizeCallBack:
+    Target: {fileID: 0}
+    MethodName: 
+  mGUI_ShowReferences: 0
+  mGUI_ShowTems: 1
+  mGUI_ShowCallback: 0
+  mLocalizeTarget: {fileID: 1606229987}
+  mLocalizeTargetName: I2.Loc.LocalizeTarget_TextMeshPro_UGUI
 --- !u!1 &451570685
 GameObject:
   m_ObjectHideFlags: 0
@@ -2168,6 +2208,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bgmSource: {fileID: 1455169962}
   sfxSource: {fileID: 1455169961}
+--- !u!114 &1606229987
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 481ab606793a67349be805c13febeba0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mTarget: {fileID: 420096187}
+  mAlignment_RTL: 4098
+  mAlignment_LTR: 4098
+  mAlignmentWasRTL: 0
+  mInitializeAlignment: 0
 --- !u!1 &1676902401
 GameObject:
   m_ObjectHideFlags: 0
@@ -2348,6 +2405,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6db59fc2785533458b49033ec3858e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerDeck: {fileID: 0}
 --- !u!1 &1991134164
 GameObject:
   m_ObjectHideFlags: 0
