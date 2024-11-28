@@ -34,6 +34,12 @@ namespace DefaultNamespace
             _deck.RemoveAt(_deck.Count - 1);
         }
 
+        public void Draw(int count)
+        {
+            for (int i = 0; i < count; i++)
+                Draw();
+        }
+
         public void StartDraw()
         {
             for (int i = 0; i < _drawCount; i++)

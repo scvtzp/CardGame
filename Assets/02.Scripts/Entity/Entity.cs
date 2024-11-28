@@ -66,5 +66,7 @@ namespace CardGame.Entity
         {
             deckService.SetDeck(deck);
         }
+
+        public void Draw(int count) => deckService.Draw(count);
     }
 }
