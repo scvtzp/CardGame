@@ -1,23 +1,21 @@
 using System.Collections.Generic;
+using _02.Scripts.Manager;
 using DefaultNamespace;
 using CardGame.Entity;
 using UnityEngine;
 using Manager.Generics;
+using Skill;
 
 namespace Manager
 {
-    public delegate void KillDelegate();
-    public delegate void VoidDelegate();
-
-    public enum KillType
+    public enum TriggerType
     {
-        Ally,
-        Enemy
-    }
-    public enum SkillDelegateType
-    {
-        Start,
-        End,
+        TurnStart,
+        TurnEnd,
+        UseCardStart,
+        UseCardEnd,
+        GetDamage,
+        GetHeal,
     }
 
     public enum Turn
@@ -26,33 +24,63 @@ namespace Manager
         EnemyTurn,
     }
 
+    public class TriggerData
+    {
+        public string userId; //사용자의 이름
+        
+        //ex) 죄악의 낙인
+        //적 하수인에게 낙인을 부여합니다. 그 하수인이 피해를 받을 때마다 적 영웅에게 피해를 1 줍니다.
+        public TriggerType triggerType; //트리거 - 피해를 받을 때마다.
+        public TargetObject triggerSource; //트리거 대상 - 그 하수인이.
+        public TargetObject target; //행동 대상 - 적 영웅에게.
+        public List<ISkill> skills; // 행동 - 피해를 1 줍니다.
+
+        public int count; //언제까지 유지되는것인가? -> -1이면 평생.
+
+        public TriggerData(TriggerType triggerType, TargetType triggerSource, TargetType target, int count, List<ISkill> skills)
+        {
+            this.triggerType = triggerType;
+            this.triggerSource = new TargetObject(triggerSource);
+            this.target = new TargetObject(target);
+            this.skills = skills;
+            this.count = count;
+        }
+
+        /// <summary>
+        /// 주의!! count를 제외하고는 얕은 복사중임. 상관없어서 일단냅둠.
+        /// </summary>
+        /// <param name="triggerData"></param>
+        public TriggerData(TriggerData triggerData)
+        {
+            this.triggerType = triggerData.triggerType;
+            this.triggerSource = triggerData.triggerSource;
+            this.target = triggerData.target;
+            this.skills = triggerData.skills;
+            this.count = triggerData.count;
+        }
+    }
+
     public class GameManager : Singleton<GameManager>
     {
-        private Dictionary<KillType, KillDelegate> KillDelegates = new();
-        private Dictionary<SkillDelegateType, VoidDelegate> SkillDelegate = new();
-
         private LinkedList<DeckService> decks = new();
         public DeckService playerDeck;
         
         public Turn Turn { get; private set; } = Turn.MyTurn;
-        private List<Entity> team1Entity = new List<Entity>(); //아군 캐릭터들
-        private List<Entity> team2Entity = new List<Entity>(); //적 캐릭터들
+        public List<Entity> team1Entity = new List<Entity>(); //아군 캐릭터들
+        public List<Entity> team2Entity = new List<Entity>(); //적 캐릭터들
         
         public GameManager()
         {
-            SkillDelegate.Add(SkillDelegateType.Start, null);
-            SkillDelegate.Add(SkillDelegateType.End, null);
+            
         }
         
-        public void AddSkillDelegate(SkillDelegateType type, VoidDelegate del) => SkillDelegate[SkillDelegateType.Start] += del;
-        public void ResetSkillDelegate(SkillDelegateType type) => SkillDelegate[SkillDelegateType.Start] = null;
         public void AddDeck(DeckService deck) => decks.AddLast(deck);
-        public void AddEntity(Entity entity, ObjectType type)
+        public void AddEntity(Entity entity, TargetType type)
         {
             //개체 생성시 델리게이트 추가?
-            if(type == ObjectType.Team1 || type == ObjectType.Team1Create)
+            if(type.HasFlag(TargetType.Ally))
                 team1Entity.Add(entity);
-            if(type == ObjectType.Team2 || type == ObjectType.Team2Create)
+            if(type.HasFlag(TargetType.Enemy))
                 team2Entity.Add(entity);
         }
 
@@ -78,7 +106,7 @@ namespace Manager
         /// </summary>
         public void Action(Card card, Entity target)
         {
-            SkillDelegate[SkillDelegateType.Start]?.Invoke();
+            TriggerManager.Instance.OnTrigger(TriggerType.UseCardStart);
             
             foreach (var skill in card.GetSkill()) //카드 사용
                 skill.StartSkill(target);
@@ -91,7 +119,7 @@ namespace Manager
             }
             //todo: 버린더미로 이동될 때 ~~~ 로직 추가
             
-            SkillDelegate[SkillDelegateType.End]?.Invoke();
+            TriggerManager.Instance.OnTrigger(TriggerType.UseCardEnd);
         }
 
         public void EndTurn()
@@ -106,9 +134,12 @@ namespace Manager
             
         public void ChangeTurn()
         {
+            TriggerManager.Instance.OnTrigger(TriggerType.TurnEnd);
+            
             Turn = Turn == Turn.MyTurn ? Turn.EnemyTurn : Turn.MyTurn;
-
+            
             StartTurn();
+            TriggerManager.Instance.OnTrigger(TriggerType.TurnStart);
             // 적군은 자동턴.
             if (Turn == Turn.EnemyTurn)
             {

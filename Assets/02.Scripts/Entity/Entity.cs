@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using _02.Scripts.Manager;
 using DefaultNamespace;
 using Manager;
 using UnityEngine;
@@ -12,7 +13,7 @@ namespace CardGame.Entity
         [SerializeField] private SpriteRenderer spriteRenderer;
         [SerializeField] private EntityView entityView;
         
-        public ObjectType type;
+        public TargetType type;
         public int hp = 10;
         public int maxhp = 10;
         [FormerlySerializedAs("deck")] public DeckService deckService;
@@ -37,12 +38,18 @@ namespace CardGame.Entity
         public void ChangeHp(int amount)
         {
             hp += amount;
-            Debug.Log($"현재 hp:{hp}");
+            Debug.Log($"{gameObject.name} 현재 hp:{hp}");
             
             entityView?.ChangeHp(hp, maxhp);
             
             if(hp <= 0)
                 _gameManager.KillAction(this);
+            
+            //트리거 처리
+            if(amount < 0)
+                TriggerManager.Instance.OnTrigger(TriggerType.GetDamage, this);
+            else if(amount > 0)
+                TriggerManager.Instance.OnTrigger(TriggerType.GetHeal, this);
         }
 
         public void Kill()

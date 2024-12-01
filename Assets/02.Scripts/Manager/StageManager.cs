@@ -18,7 +18,7 @@ namespace Manager
         public void SetStage(string stageName)
         {
             player.SetDeck(DefaultDeckManager.Instance.defaultDeckSetting["Player_1"]);
-            GameManager.Instance.AddEntity(player, ObjectType.Team1);
+            GameManager.Instance.AddEntity(player, TargetType.Ally);
             GameManager.Instance.playerDeck = player.deckService;
 
             StartNewStage();
@@ -42,7 +42,7 @@ namespace Manager
         {
             Entity clone = Instantiate(monster, new Vector3(5.17f, -1.23f, 0), Quaternion.identity);
             clone.SetDeck(DefaultDeckManager.Instance.defaultDeckSetting["Monster_1"]);
-            GameManager.Instance.AddEntity(clone, ObjectType.Team2);
+            GameManager.Instance.AddEntity(clone, TargetType.Enemy);
         }
     }
 }

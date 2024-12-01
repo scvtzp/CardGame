@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using System.Reflection;
+using Manager;
 using Manager.Generics;
 using Skill;
 
@@ -63,6 +64,70 @@ namespace DefaultNamespace
                     string className = str;
                     TargetType target = TargetType.None;
                     int[] param = null;
+                    
+                    //트리거형 스킬 따로 예외처리.
+                    if (str.Contains('{')) 
+                    {
+                        className = str.Split('{')[0];
+                        var strings = str.Split('{')[1].Split('#');
+                        List<ISkill> skills = new List<ISkill>();
+                        
+                        #region 내부적으로 또 스킬 처리. 함수로 깔끔하게 정리 필요.
+                        
+                        TargetType actiontarget = TargetType.None;
+                        var actionString = strings[4];
+                        string actionName = actionString;
+                        int[] actionParam = null;
+                        
+                        if (actionString.Contains('^'))
+                        {
+                            foreach (var v in actionString.Split('^')[0].Split(','))
+                                actiontarget |= Enum.Parse<TargetType>(v);
+                        
+                            actionName = actionName.Split('^')[1];
+                        }
+                        if (actionString.Contains('('))
+                        {
+                            var paramString = actionString.Split('(')[1].Split(',');
+                            actionParam = new int[paramString.Length];
+                            for (var i = 0; i < paramString.Length; i++)
+                            {
+                                var s = paramString[i];
+                                actionParam[i] = int.Parse(s);
+                            }
+                        
+                            actionName = actionName.Split('(')[0];
+                        }
+                    
+                        //생성
+                        if (actiontarget != TargetType.None)
+                        {
+                            if(actionParam != null)
+                                skills.Add((ISkill)InstantiateClassByName(actionName, actiontarget, actionParam));
+                            else
+                                skills.Add((ISkill)InstantiateClassByName(actionName, actiontarget));
+                        }
+                        else
+                        {
+                            if(actionParam != null)
+                                skills.Add((ISkill)InstantiateClassByName(actionName, actionParam));
+                            else
+                                skills.Add((ISkill)InstantiateClassByName(actionName));
+                        }
+                        #endregion
+                        
+                        param = new int[1];
+                        param[0] = int.Parse(strings[3]);
+                        
+                        action.Add((ISkill)InstantiateClassByName(className, 
+                            GameUtil.StringToEnum<TriggerType>(strings[0]), 
+                            GameUtil.StringToEnum<TargetType>(strings[1]), 
+                            GameUtil.StringToEnum<TargetType>(strings[2]), 
+                            skills, param));
+                        continue;
+                    }
+                    
+                    //일반적인 형식.
                     if (str.Contains('^'))
                     {
                         foreach (var v in str.Split('^')[0].Split(','))

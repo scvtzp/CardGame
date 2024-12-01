@@ -153,7 +153,7 @@ MonoBehaviour:
   boxCollider: {fileID: 5154016924028386489}
   spriteRenderer: {fileID: 7593505671197136433}
   entityView: {fileID: 3722662445874842365}
-  type: 2
+  type: 4
   hp: 10
   maxhp: 10
   deckService: {fileID: 4139776299266687413}

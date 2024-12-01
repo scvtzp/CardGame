@@ -40,5 +40,18 @@ namespace DefaultNamespace
                 }
             }
         }
+
+        public static void SafeAdd<T1, T2>(this Dictionary<T1, T2> dictionary, T1 key, T2 value)
+        {
+            if(dictionary.ContainsKey(key))
+                dictionary[key] = value;
+                
+            dictionary.Add(key, value);
+        }
+
+        public static T StringToEnum<T>(string str) where T : Enum
+        {
+            return (T)Enum.Parse(typeof(T), str);
+        }
     }
 }

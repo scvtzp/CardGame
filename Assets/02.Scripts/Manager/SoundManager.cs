@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
@@ -13,7 +14,13 @@ namespace Manager
         [SerializeField] private AudioSource sfxSource; // 효과음용
 
         private readonly Dictionary<string, AudioClip> _soundDic = new Dictionary<string, AudioClip>();
-        
+
+        private void Start()
+        {
+            SetBGMVolume(PlayerPrefs.GetFloat("BGMVolume", 0.5f));
+            SetSFXVolume(PlayerPrefs.GetFloat("SFXVolume", 0.5f));
+        }
+
         // 효과음 재생 (어드레서블에서 로드)
         public void PlaySfx(string sfxName)
         {
@@ -62,5 +69,8 @@ namespace Manager
                 };
             }
         }
+
+        public void SetBGMVolume(float value) => bgmSource.volume = value;
+        public void SetSFXVolume(float value) => sfxSource.volume = value;
     }
 }

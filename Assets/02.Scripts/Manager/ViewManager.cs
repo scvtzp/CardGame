@@ -8,33 +8,36 @@ using UnityEngine.ResourceManagement.AsyncOperations;
 
 namespace Manager
 {
-    public class ViewManager : Singleton<ViewManager>
+    public class ViewManager : NonDontDestroySingleton<ViewManager>
     {
         private Dictionary<string, ViewBase> _views = new Dictionary<string, ViewBase>();
         private GameObject _root;
 
         public void ShowView<T>() where T : ViewBase 
         {
-            var name = typeof(T).Name;
-            
-            if (_views.TryGetValue(name, out ViewBase view))
+            ShowView(typeof(T).Name);
+        }
+
+        public void ShowView(string viewName)
+        {
+            if (_views.TryGetValue(viewName, out ViewBase view))
                 ShowView(view);
             
             else
             {
-                Addressables.LoadAssetAsync<GameObject>($"Assets/03.Prefabs/View/{name}.prefab").Completed += handle =>
+                Addressables.LoadAssetAsync<GameObject>($"Assets/03.Prefabs/View/{viewName}.prefab").Completed += handle =>
                 {
                     if (handle.Status == AsyncOperationStatus.Succeeded)
                     {
                         var prefab = handle.Result;
                         
                         view = GameObject.Instantiate(prefab, GetCanvas()).GetComponent<ViewBase>();
-                        _views.Add(name, view);
+                        _views.Add(viewName, view);
                         view.Init();
                         ShowView(view);
                     }
                     else
-                        Debug.LogWarning($"어드레서블에서 {name}를 찾을 수 없습니다.");
+                        Debug.LogWarning($"어드레서블에서 {viewName}를 찾을 수 없습니다.");
                 };
             }
         }

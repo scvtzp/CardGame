@@ -10,7 +10,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 70479956128575318, guid: 38d629064aa72654c961f6fda1159485, type: 3}
       propertyPath: m_Name
-      value: CardView Variant
+      value: CardView Button
       objectReference: {fileID: 0}
     - target: {fileID: 2400770372354115439, guid: 38d629064aa72654c961f6fda1159485, type: 3}
       propertyPath: m_Pivot.x

@@ -73,6 +73,30 @@ MonoBehaviour:
       - End Turn
       Flags: 0000
       Languages_Touch: []
+    - Term: card_4
+      TermType: 0
+      Description: 
+      Languages:
+      - "\uB4DC\uB85C\uC6B0"
+      - "\uB4DC\uB85C\uC6B0"
+      Flags: 0000
+      Languages_Touch: []
+    - Term: card_5
+      TermType: 0
+      Description: 
+      Languages:
+      - "3\uD134\uC885 \uBAA8\uB450 1\uB380"
+      - "3\uD134\uC885 \uBAA8\uB450 1\uB380"
+      Flags: 0000
+      Languages_Touch: []
+    - Term: card_6
+      TermType: 0
+      Description: 
+      Languages:
+      - "\uC8C4\uC545\uC758 \uB099\uC778"
+      - "\uC8C4\uC545\uC758 \uB099\uC778"
+      Flags: 0000
+      Languages_Touch: []
     CaseInsensitiveTerms: 0
     OnMissingTranslation: 1
     mTerm_AppName: 
@@ -88,7 +112,7 @@ MonoBehaviour:
     Google_WebServiceURL: https://script.google.com/macros/s/AKfycbzjAaT-hDcxSOUuC4v1CUrz8lrfVwvF7Afo_Y7UICLDmxHXmP0qXMdutoyx5iE4vbUHlw/exec
     Google_SpreadsheetKey: 1Y1b2-MqcCXenTkzXc2uPDmcoQhNpgL25QenX6D4Mdfk
     Google_SpreadsheetName: I2Loc CardGame Localization
-    Google_LastUpdatedVersion: 1732632822557
+    Google_LastUpdatedVersion: 1733053622540
     Google_Password: change_this
     GoogleUpdateFrequency: 3
     GoogleInEditorCheckFrequency: 2

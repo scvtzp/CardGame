@@ -43,9 +43,9 @@ namespace DefaultNamespace
             _skill = null;
         }
         
-        public bool GetTarget(Entity target, ObjectType objectType)
+        public bool GetTarget(Entity target, TargetType objectType)
         {
-            return _costAndTarget.GetTarget(target, objectType);
+            return _costAndTarget.CheckTarget(target, objectType);
         }
 
         //todo: 덮어쓰기 할건지 물어보기.

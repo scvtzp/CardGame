@@ -6,65 +6,16 @@ using UnityEngine.EventSystems;
 using UnityEngine.Serialization;
 using CardGame.Entity;
 using Skill;
+using Unity.VisualScripting;
 
 namespace DefaultNamespace
 {
-    [Flags]
-    public enum TargetType
-    {
-        None = 0, //본인
-        Me = 1<<0, //본인
-        Ally = 1<<1, //아군
-        Enemy = 1<<2, //적군
-        
-        Summoner = 1<<3, //소환된 잡몹
-    }
-    public class CostAndTarget
-    {
-        public int _cost { get; private set; }
-        //todo: 지금은 적을 타게하기로 되어있는데, 다양한 타겟을 경우에 따라 조준할 수 있도록 수정 필요.
-        public TargetType _targetType { get; private set; }
-
-        public CostAndTarget(int cost, TargetType targetType)
-        {
-            _cost = cost;
-            _targetType = targetType;
-        }
-        
-        public CostAndTarget(CostAndTarget costAndTarget)
-        {
-            _cost = costAndTarget._cost;
-            _targetType = costAndTarget._targetType;
-        }
-        
-        /// <summary>
-        /// todo: 지금은 테스트용으로 오브젝트 타입 다른지만 체크중임.
-        /// </summary>
-        public bool GetTarget(Entity other, ObjectType type)
-        {
-            if (other.type != type)
-            {
-                return true;
-            }
-            
-            return true;
-        }
-    }
-
-    public enum ObjectType //태그다는거 해서 구분해야할듯? 아니면 팀/포지션 이넘 두개로 따로 관리하던가.
-    {
-        Team1, //왼쪽팀(플레이어)
-        Team1Create, //왼쪽팀의 소환물들
-        Team2,
-        Team2Create,
-    }
-    
     public class Card : MonoBehaviour, IDragHandler, IPointerClickHandler, IPointerUpHandler
     {
         [SerializeField] SpriteRenderer spriteRendererTest;   
         [SerializeField] DeckService deckService; //테스트용으로 직접 박아줌.   
         
-        public ObjectType _objectType; //카드 소유자의 타입.
+        public TargetType _objectType; //카드 소유자의 타입.
         
         private GameManager _gameManager;
         private Entity _target;
@@ -85,7 +36,7 @@ namespace DefaultNamespace
         public void OnDrag(PointerEventData eventData)
         { 
             //TEST
-            if(_objectType != ObjectType.Team1)
+            if(_objectType.HasFlag(TargetType.Me))
                 return;
             
             Vector3 worldPosition = Camera.main.ScreenToWorldPoint(eventData.position);
@@ -125,20 +76,10 @@ namespace DefaultNamespace
             if(_target == null)
                 return;
 
-            // 내 차례가 아니면 리턴. (사실상 플레이어 용이긴 한데... Team2껀 그냥 지울까?)
-            switch (_objectType)
-            {
-                case ObjectType.Team1:
-                case ObjectType.Team1Create:
-                    if(_gameManager.Turn != Turn.MyTurn)
-                        return;
-                    break;
-                case ObjectType.Team2:
-                case ObjectType.Team2Create:
-                    if(_gameManager.Turn != Turn.EnemyTurn)
-                        return;
-                    break;
-            }
+            if(_objectType.HasFlag(TargetType.Ally) && _gameManager.Turn != Turn.MyTurn)
+                    return;
+            if(_objectType.HasFlag(TargetType.Enemy) && _gameManager.Turn != Turn.EnemyTurn)
+                    return;
             
             SoundManager.Instance.PlaySfx("UseCard");
             _gameManager.Action(this, _target);

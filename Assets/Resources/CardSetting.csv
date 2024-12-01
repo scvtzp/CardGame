@@ -3,3 +3,6 @@ card_0,데미지,Damage(5
 card_1,힐,Heal(5
 card_2,자힐+딜,Damage(5/Me^Heal(5
 card_3,딜+랜덤딜,Damage(5/Enemy^Damage(5
+card_4,드로우,Draw(1
+card_5,3턴종 모두 1뎀,TriggerAction{TurnEnd#None#Enemy#2#Damage(3
+card_6,죄악의 낙인,TriggerAction{GetDamage#Select#Enemy#-1#Damage(5
