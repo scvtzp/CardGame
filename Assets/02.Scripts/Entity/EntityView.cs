@@ -1,3 +1,4 @@
+using DefaultNamespace;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -9,9 +10,9 @@ namespace CardGame.Entity
         
         private Entity _entity;
 
-        public void ChangeHp(int hp, int maxhp)
+        public void ChangeHp(int hp, int maxHp)
         {
-            hpBar.SetHpBar(hp, maxhp);
+            hpBar.SetHpBar(hp, maxHp);
         }
     }
 }

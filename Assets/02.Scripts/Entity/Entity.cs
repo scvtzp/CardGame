@@ -12,6 +12,7 @@ namespace CardGame.Entity
         [SerializeField] private BoxCollider2D boxCollider;
         [SerializeField] private SpriteRenderer spriteRenderer;
         [SerializeField] private EntityView entityView;
+        [SerializeField] TextRendererParticleSystem splashParticles;
         
         public TargetType type;
         public int hp = 10;
@@ -41,6 +42,7 @@ namespace CardGame.Entity
             Debug.Log($"{gameObject.name} 현재 hp:{hp}");
             
             entityView?.ChangeHp(hp, maxhp);
+            splashParticles.SpawnParticle(transform.position, $"{amount}", amount > 0? Color.green: Color.red);
             
             if(hp <= 0)
                 _gameManager.KillAction(this);

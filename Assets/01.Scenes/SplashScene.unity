@@ -856,6 +856,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 78bca19255bf18340b0c3ee8e55dfcc3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  splashParticles: {fileID: 0}
 --- !u!4 &835292607
 Transform:
   m_ObjectHideFlags: 0
@@ -2250,7 +2251,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 835292606}
         m_TargetAssemblyTypeName: Scene.SplashScene, Assembly-CSharp
-        m_MethodName: OnPressedStartButton
+        m_MethodName: OnPressedStatsButton
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

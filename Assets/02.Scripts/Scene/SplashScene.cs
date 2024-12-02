@@ -1,4 +1,3 @@
-using System;
 using Manager;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -20,6 +19,11 @@ namespace Scene
         public void OnPressedExitButton()
         {
             Application.Quit();
+        }
+
+        public void OnPressedStatsButton()
+        {
+            ;
         }
     }
 }

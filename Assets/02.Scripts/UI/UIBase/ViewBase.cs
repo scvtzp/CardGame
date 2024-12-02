@@ -1,3 +1,4 @@
+using Manager;
 using UnityEngine;
 
 namespace UI.UIBase
@@ -39,5 +40,9 @@ namespace UI.UIBase
             
         }
 
+        public void OnPressedBackKey()
+        {
+            ViewManager.Instance.HideView(GetType().Name);
+        }
     }
 }

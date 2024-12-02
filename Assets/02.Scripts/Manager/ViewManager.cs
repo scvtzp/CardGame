@@ -41,13 +41,7 @@ namespace Manager
                 };
             }
         }
-
-        public void HideView<T>() where T : ViewBase
-        {
-            var name = typeof(T).Name;
-            HideView(_views[name]);
-        }
-
+        
         private Transform GetCanvas()
         {
             if(_root != null)
@@ -73,6 +67,8 @@ namespace Manager
             view.ShowEnd();
         }
         
+        public void HideView<T>() where T : ViewBase => HideView(typeof(T).Name);
+        public void HideView(string viewName) => HideView(_views[viewName]);
         private void HideView(ViewBase view)
         {
             view.HideStart();

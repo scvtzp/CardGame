@@ -35,6 +35,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 635776641454052885}
+  - {fileID: 2604200619508183396}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &7593505671197136433
@@ -153,6 +154,7 @@ MonoBehaviour:
   boxCollider: {fileID: 5154016924028386489}
   spriteRenderer: {fileID: 7593505671197136433}
   entityView: {fileID: 3722662445874842365}
+  splashParticles: {fileID: 2604200619508183403}
   type: 4
   hp: 10
   maxhp: 10
@@ -180,6 +182,83 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8831766223124b3c9121d1fe5686946b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1001 &1466828101745309559
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 5472407507605926213}
+    m_Modifications:
+    - target: {fileID: 3492755681695876624, guid: 300e583fdb7f74e2d939f819db5055a4, type: 3}
+      propertyPath: m_Name
+      value: UIParticleSystem
+      objectReference: {fileID: 0}
+    - target: {fileID: 3492755681695876625, guid: 300e583fdb7f74e2d939f819db5055a4, type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3492755681695876627, guid: 300e583fdb7f74e2d939f819db5055a4, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3492755681695876627, guid: 300e583fdb7f74e2d939f819db5055a4, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3492755681695876627, guid: 300e583fdb7f74e2d939f819db5055a4, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3492755681695876627, guid: 300e583fdb7f74e2d939f819db5055a4, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 3492755681695876627, guid: 300e583fdb7f74e2d939f819db5055a4, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 3492755681695876627, guid: 300e583fdb7f74e2d939f819db5055a4, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3492755681695876627, guid: 300e583fdb7f74e2d939f819db5055a4, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3492755681695876627, guid: 300e583fdb7f74e2d939f819db5055a4, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: 3492755681695876627, guid: 300e583fdb7f74e2d939f819db5055a4, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3492755681695876627, guid: 300e583fdb7f74e2d939f819db5055a4, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 300e583fdb7f74e2d939f819db5055a4, type: 3}
+--- !u!4 &2604200619508183396 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3492755681695876627, guid: 300e583fdb7f74e2d939f819db5055a4, type: 3}
+  m_PrefabInstance: {fileID: 1466828101745309559}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2604200619508183403 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3492755681695876636, guid: 300e583fdb7f74e2d939f819db5055a4, type: 3}
+  m_PrefabInstance: {fileID: 1466828101745309559}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 270f5068eec9d48d3a90e557ff4371cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &5302357352494343510
