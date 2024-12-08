@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using _02.Scripts.Manager;
 using DefaultNamespace;
 using Manager;
@@ -38,6 +39,8 @@ namespace CardGame.Entity
         //todo: 여기 rx구독으로 변경
         public void ChangeHp(int amount)
         {
+            if(maxhp < hp + amount)
+                amount = maxhp - hp;
             hp += amount;
             Debug.Log($"{gameObject.name} 현재 hp:{hp}");
             
@@ -60,10 +63,17 @@ namespace CardGame.Entity
         }
 
         ///자동 턴(내가 아닌 적이나 생성체들 AI용)
-        public void AutoTurn()
+        public async Task AutoTurn()
         {
             //todo: 덱 서비스를 가지고 자동 전투 구현.
             StartTurn();
+
+            var handCopy = new List<CardData>(deckService.Hand);
+            foreach (var cardData in handCopy)
+            {
+                await Task.Delay(500);
+                _gameManager.Action(cardData);
+            }
         }
 
         public void StartTurn()

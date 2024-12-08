@@ -27,8 +27,9 @@ namespace UI
         {
             for (var index = 0; index < transform.childCount; index++)
             {
-                var childTransform = transform.GetChild(index).GetComponent<RectTransform>();
-                childTransform.anchoredPosition = new Vector2((index-transform.childCount/2)*100,134);
+                var childTransform = transform.GetChild(index).GetComponent<Card>();
+                childTransform.SetPos(new Vector2((index-transform.childCount/2)*300,134));
+                
             }
         }
     }

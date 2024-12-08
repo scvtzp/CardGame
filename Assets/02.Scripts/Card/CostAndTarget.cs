@@ -20,17 +20,12 @@ namespace DefaultNamespace
             _targetType = costAndTarget._targetType;
         }
         
-        /// <summary>
-        /// todo: 지금은 테스트용으로 오브젝트 타입 다른지만 체크중임.
-        /// </summary>
-        public bool CheckTarget(Entity other, TargetType type)
+        public bool CheckTarget(Entity other, TargetType mytype)
         {
-            if (other.type != type)
-            {
+            if ((other.type & _targetType) != 0) 
                 return true;
-            }
             
-            return true;
+            return false;
         }
     }
 }

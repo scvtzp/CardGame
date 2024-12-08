@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using DefaultNamespace;
 using Manager;
 using UI.UIBase;
@@ -34,15 +35,15 @@ namespace UI.CardMacker
             }
         }
 
-        public override void ShowStart()
+        public override async Task ShowStart()
         {
-            UpdateData();
+            await UpdateData();
         }
         
-        public void UpdateData()
+        public async Task UpdateData()
         {
             for (int i = 0; i < _cardViews.Count; i++)
-                _cardViews[i].UpdateData(_cardDatas[i]);
+                await _cardViews[i].UpdateData(_cardDatas[i]);
         }
 
         public void OnPressedBackKey()

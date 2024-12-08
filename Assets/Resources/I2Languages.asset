@@ -49,30 +49,6 @@ MonoBehaviour:
       - "\uB09C\uC0AC"
       Flags: 0000
       Languages_Touch: []
-    - Term: "\uACE8\uB4DC"
-      TermType: 0
-      Description: 
-      Languages:
-      - "\uACE8\uB4DC"
-      - Gold
-      Flags: 0000
-      Languages_Touch: []
-    - Term: "\uC2A4\uD14C\uC774\uC9C0"
-      TermType: 0
-      Description: 
-      Languages:
-      - "\uC2A4\uD14C\uC774\uC9C0"
-      - Stage
-      Flags: 0000
-      Languages_Touch: []
-    - Term: "\uD134 \uC885\uB8CC"
-      TermType: 0
-      Description: 
-      Languages:
-      - "\uD134 \uC885\uB8CC"
-      - End Turn
-      Flags: 0000
-      Languages_Touch: []
     - Term: card_4
       TermType: 0
       Description: 
@@ -85,8 +61,8 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - "3\uD134\uC885 \uBAA8\uB450 1\uB380"
-      - "3\uD134\uC885 \uBAA8\uB450 1\uB380"
+      - "2\uD134\uC885 \uBAA8\uB450 1\uB380"
+      - "2\uD134\uC885 \uBAA8\uB450 1\uB380"
       Flags: 0000
       Languages_Touch: []
     - Term: card_6
@@ -95,6 +71,108 @@ MonoBehaviour:
       Languages:
       - "\uC8C4\uC545\uC758 \uB099\uC778"
       - "\uC8C4\uC545\uC758 \uB099\uC778"
+      Flags: 0000
+      Languages_Touch: []
+    - Term: gold
+      TermType: 0
+      Description: 
+      Languages:
+      - "\uACE8\uB4DC"
+      - Gold
+      Flags: 0000
+      Languages_Touch: []
+    - Term: stage
+      TermType: 0
+      Description: 
+      Languages:
+      - "\uC2A4\uD14C\uC774\uC9C0"
+      - Stage
+      Flags: 0000
+      Languages_Touch: []
+    - Term: endTurn
+      TermType: 0
+      Description: 
+      Languages:
+      - "\uD134 \uC885\uB8CC"
+      - End Turn
+      Flags: 0000
+      Languages_Touch: []
+    - Term: desc_card_0
+      TermType: 0
+      Description: 
+      Languages:
+      - "\uD53C\uD574\uB97C 5\uC90D\uB2C8\uB2E4."
+      - 
+      Flags: 0000
+      Languages_Touch: []
+    - Term: desc_card_1
+      TermType: 0
+      Description: 
+      Languages:
+      - "\uC0DD\uBA85\uB825\uC744 5\uD68C\uBCF5\uC2DC\uD0B5\uB2C8\uB2E4."
+      - 
+      Flags: 0000
+      Languages_Touch: []
+    - Term: desc_card_2
+      TermType: 0
+      Description: 
+      Languages:
+      - "\uD53C\uD574\uB97C 5\uC90D\uB2C8\uB2E4. \uB0B4 \uC0DD\uBA85\uB825\uC744
+        5\uD68C\uBCF5\uC2DC\uD0B5\uB2C8\uB2E4."
+      - 
+      Flags: 0000
+      Languages_Touch: []
+    - Term: desc_card_3
+      TermType: 0
+      Description: 
+      Languages:
+      - "\uD53C\uD574\uB97C 5\uC90D\uB2C8\uB2E4. \uBB34\uC791\uC704 \uC801\uC5D0\uAC8C
+        \uD53C\uD574\uB97C 5\uC90D\uB2C8\uB2E4."
+      - 
+      Flags: 0000
+      Languages_Touch: []
+    - Term: desc_card_4
+      TermType: 0
+      Description: 
+      Languages:
+      - "\uCE74\uB4DC\uB97C 1\uC7A5 \uBF51\uC2B5\uB2C8\uB2E4."
+      - 
+      Flags: 0000
+      Languages_Touch: []
+    - Term: desc_card_5
+      TermType: 0
+      Description: 
+      Languages:
+      - "2\uD134 \uB3D9\uC548 \uD134\uC774 \uC885\uB8CC\uB418\uBA74 \uBAA8\uB4E0
+        \uC801\uC5D0\uAC8C \uD53C\uD574\uB97C 3 \uC90D\uB2C8\uB2E4."
+      - 
+      Flags: 0000
+      Languages_Touch: []
+    - Term: desc_card_6
+      TermType: 0
+      Description: 
+      Languages:
+      - "\uD53C\uD574\uB97C \uC785\uD78C\uB2E4\uBA74, \uCD94\uAC00\uB85C \uD53C\uD574\uB97C
+        5 \uC90D\uB2C8\uB2E4."
+      - 
+      Flags: 0000
+      Languages_Touch: []
+    - Term: empty
+      TermType: 0
+      Description: 
+      Languages:
+      - ' '
+      - ' '
+      Flags: 0000
+      Languages_Touch: []
+    - Term: gameTitle
+      TermType: 0
+      Description: 
+      Languages:
+      - "\uBE4C\uB529 \uCE74\uB4DC\n\uB371 \uBE4C\uB529"
+      - 'Building Card
+
+        Deck Building'
       Flags: 0000
       Languages_Touch: []
     CaseInsensitiveTerms: 0
@@ -112,7 +190,7 @@ MonoBehaviour:
     Google_WebServiceURL: https://script.google.com/macros/s/AKfycbzjAaT-hDcxSOUuC4v1CUrz8lrfVwvF7Afo_Y7UICLDmxHXmP0qXMdutoyx5iE4vbUHlw/exec
     Google_SpreadsheetKey: 1Y1b2-MqcCXenTkzXc2uPDmcoQhNpgL25QenX6D4Mdfk
     Google_SpreadsheetName: I2Loc CardGame Localization
-    Google_LastUpdatedVersion: 1733053622540
+    Google_LastUpdatedVersion: 1733661086794
     Google_Password: change_this
     GoogleUpdateFrequency: 3
     GoogleInEditorCheckFrequency: 2

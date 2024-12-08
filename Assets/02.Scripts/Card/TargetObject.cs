@@ -33,6 +33,7 @@ namespace DefaultNamespace
             _selectTargetEntity.Add(entity);
         }
         
+        //todo: 이거 메니저로 해서 따로 빼야할듯?
         public List<Entity> GetTarget()
         {
             if (Type.HasFlag(TargetType.Ally) && Type.HasFlag(TargetType.Enemy))
@@ -53,6 +54,10 @@ namespace DefaultNamespace
             if (Type.HasFlag(TargetType.Select))
             {
                 return _selectTargetEntity;
+            }
+            if (Type.HasFlag(TargetType.Me))
+            {
+                return GameManager.Instance.team1Entity;
             }
 
             Debug.LogError(Type + " GetTarget 실패.");

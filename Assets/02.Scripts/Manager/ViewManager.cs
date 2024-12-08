@@ -60,9 +60,9 @@ namespace Manager
             }
         }
         
-        private void ShowView(ViewBase view)
+        private async void ShowView(ViewBase view)
         {
-            view.ShowStart();
+            await view.ShowStart();
             view.Show();
             view.ShowEnd();
         }

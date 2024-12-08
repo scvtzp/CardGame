@@ -514,6 +514,7 @@ GameObject:
   - component: {fileID: 721573086}
   - component: {fileID: 721573088}
   - component: {fileID: 721573087}
+  - component: {fileID: 721573089}
   m_Layer: 5
   m_Name: TitleText
   m_TagString: Untagged
@@ -538,7 +539,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: -491, y: 189}
-  m_SizeDelta: {x: 600, y: 400}
+  m_SizeDelta: {x: 800, y: 400}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &721573087
 MonoBehaviour:
@@ -560,7 +561,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Chimera Crafter
+  m_text: "\uBE4C\uB529 \uCE74\uB4DC\n\uB371 \uBE4C\uB529"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 688d0ae445279ec47b38fee5e3fb0fbe, type: 2}
   m_sharedMaterial: {fileID: -6530100632492371963, guid: 688d0ae445279ec47b38fee5e3fb0fbe, type: 2}
@@ -569,8 +570,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4293848814
-  m_fontColor: {r: 0.9339623, g: 0.9339623, b: 0.9339623, a: 1}
+    rgba: 4294952350
+  m_fontColor: {r: 0.6179246, g: 0.7730485, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -639,6 +640,45 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 721573085}
   m_CullTransparentMesh: 1
+--- !u!114 &721573089
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 721573085}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 344445a89b4f74a0e9a0a766903df87e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mTerm: gameTitle
+  mTermSecondary: 
+  PrimaryTermModifier: 0
+  SecondaryTermModifier: 0
+  TermPrefix: 
+  TermSuffix: 
+  LocalizeOnAwake: 1
+  IgnoreRTL: 0
+  MaxCharactersInRTL: 0
+  IgnoreNumbersInRTL: 1
+  CorrectAlignmentForRTL: 1
+  AddSpacesToJoinedLanguages: 0
+  AllowLocalizedParameters: 1
+  AllowParameters: 1
+  TranslatedObjects: []
+  LocalizeEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  AlwaysForceLocalize: 0
+  LocalizeCallBack:
+    Target: {fileID: 0}
+    MethodName: 
+  mGUI_ShowReferences: 0
+  mGUI_ShowTems: 1
+  mGUI_ShowCallback: 0
+  mLocalizeTarget: {fileID: 868550903}
+  mLocalizeTargetName: I2.Loc.LocalizeTarget_TextMeshPro_UGUI
 --- !u!1 &740147264
 GameObject:
   m_ObjectHideFlags: 0
@@ -856,7 +896,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 78bca19255bf18340b0c3ee8e55dfcc3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  splashParticles: {fileID: 0}
 --- !u!4 &835292607
 Transform:
   m_ObjectHideFlags: 0
@@ -872,6 +911,23 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &868550903
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 481ab606793a67349be805c13febeba0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mTarget: {fileID: 721573087}
+  mAlignment_RTL: 4098
+  mAlignment_LTR: 4098
+  mAlignmentWasRTL: 0
+  mInitializeAlignment: 0
 --- !u!1 &1345059615
 GameObject:
   m_ObjectHideFlags: 0

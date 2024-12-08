@@ -60,11 +60,18 @@ namespace DefaultNamespace
             GameUtil.ShuffleCollection<CardData>(_deck);
         }
         
+        //todo: 삭제하고 아래의 CardData기반으로 통폐합.
         public void UseCard(Card card)
         {
             card.UsedCard();
             Hand.Remove(card._cardData);
             Trash.Add(card._cardData);
+        }
+        
+        public void UseCard(CardData cardData)
+        {
+            Hand.Remove(cardData);
+            Trash.Add(cardData);
         }
 
         public bool ContainsCard(CardData card) => _allCardID.Contains(card.id);

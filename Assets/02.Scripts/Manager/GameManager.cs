@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using _02.Scripts.Manager;
 using DefaultNamespace;
 using CardGame.Entity;
+using DG.Tweening;
 using UnityEngine;
 using Manager.Generics;
 using Skill;
@@ -62,6 +63,9 @@ namespace Manager
 
     public class GameManager : Singleton<GameManager>
     {
+        //todo : 임시용. 나중에 팝업으로 따로 빼기
+        [SerializeField] private CardView cardView;
+        
         private LinkedList<DeckService> decks = new();
         public DeckService playerDeck;
         
@@ -104,6 +108,7 @@ namespace Manager
         /// <summary>
         /// 카드 사용 로직
         /// </summary>
+        /// //todo: 삭제하고 아래의 CardData기반으로 통폐합.
         public void Action(Card card, Entity target)
         {
             TriggerManager.Instance.OnTrigger(TriggerType.UseCardStart);
@@ -121,6 +126,37 @@ namespace Manager
             
             TriggerManager.Instance.OnTrigger(TriggerType.UseCardEnd);
         }
+        
+        /// <summary>
+        /// 오토용. 사실 Card를 매개변수로 넘겨주는게 말이안된다. 일반 로직도 CardData로 수정.
+        /// </summary>
+        /// <param name="cardData"></param>
+        public async void Action(CardData cardData)
+        {
+            TriggerManager.Instance.OnTrigger(TriggerType.UseCardStart);
+            
+            await cardView.UpdateData(cardData);
+            cardView.gameObject.SetActive(true);
+            DOVirtual.DelayedCall(0.45f, () => 
+            {
+                cardView.gameObject.SetActive(false);
+            });
+            
+            foreach (var skill in cardData.GetSkill()) //카드 사용
+                skill.StartSkill(GetTarget(cardData._costAndTarget._targetType));
+            
+            // 덱에서 버린 더미로 이동
+            foreach (var deck in decks)
+            {
+                if(deck.ContainsCard(cardData))
+                    deck.UseCard(cardData);
+            }
+            //todo: 버린더미로 이동될 때 ~~~ 로직 추가
+            
+            TriggerManager.Instance.OnTrigger(TriggerType.UseCardEnd);
+        }
+
+        private Entity GetTarget(TargetType targetType) => new TargetObject(targetType).GetTarget()[0]; 
 
         public void EndTurn()
         {
@@ -132,7 +168,7 @@ namespace Manager
             //todo: 스타트/엔드 둘다 카드 액션처럼 델리게이트로 변환.
         }
             
-        public void ChangeTurn()
+        public async void ChangeTurn()
         {
             TriggerManager.Instance.OnTrigger(TriggerType.TurnEnd);
             
@@ -144,7 +180,7 @@ namespace Manager
             if (Turn == Turn.EnemyTurn)
             {
                 foreach (var entity in team2Entity)
-                    entity.AutoTurn();
+                    await entity.AutoTurn();
                 
                 EndTurn();
                 return;

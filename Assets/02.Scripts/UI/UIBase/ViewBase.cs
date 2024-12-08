@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using Manager;
 using UnityEngine;
 
@@ -10,9 +11,9 @@ namespace UI.UIBase
             
         } 
         
-        public virtual void ShowStart()
+        public async virtual Task ShowStart()
         {
-            
+            return;
         }
 
         public virtual void Show()

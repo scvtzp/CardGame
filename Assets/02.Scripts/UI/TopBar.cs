@@ -1,5 +1,6 @@
 using System;
 using DefaultNamespace;
+using I2.Loc;
 using Manager;
 using R3;
 using TMPro;
@@ -14,8 +15,8 @@ namespace UI
         
         private void Start()
         {
-            StageManager.Instance.Stage.Subscribe(x => stage.text = $"스테이지 {x}");
-            PlayerModel.Instance.Gold.Subscribe(x => gold.text = $"{x} 골드");
+            StageManager.Instance.Stage.Subscribe(x => stage.text = $"{LocalizationManager.GetTranslation("stage")}: {x}");
+            PlayerModel.Instance.Gold.Subscribe(x => gold.text = $"{x} {LocalizationManager.GetTranslation("gold")}");
         }
     }
 }

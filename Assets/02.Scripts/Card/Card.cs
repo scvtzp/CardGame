@@ -10,6 +10,9 @@ using Unity.VisualScripting;
 
 namespace DefaultNamespace
 {
+    /// <summary>
+    /// 핸드의 카드 로직(드래그해서 사용, 등)을 담당.
+    /// </summary>
     public class Card : MonoBehaviour, IDragHandler, IPointerClickHandler, IPointerUpHandler
     {
         [SerializeField] SpriteRenderer spriteRendererTest;   
@@ -23,16 +26,26 @@ namespace DefaultNamespace
         public CardData _cardData;
         public CardView _cardView;
 
+        private Vector3 startPosition;
+        private RectTransform rectTransform;
+        
         public void Init(DeckService deck, CardData data)
         {
             _gameManager = GameManager.Instance;
-            // _gameManager.AddSkillDelegate(SkillDelegateType.Start, () => {Debug.Log("스킬 사용 전");});
+            rectTransform = GetComponent<RectTransform>(); 
             
             _cardData = data;
             deckService = deck;
             _cardView?.UpdateData(_cardData);
         }
 
+        public void SetPos(Vector3 position)
+        {
+            rectTransform.anchoredPosition = position;
+            startPosition = position;
+        }
+        private void ResetPos() => rectTransform.anchoredPosition = startPosition;
+        
         public void OnDrag(PointerEventData eventData)
         { 
             //TEST
@@ -44,24 +57,25 @@ namespace DefaultNamespace
             transform.position = worldPosition;
         }
         
-        //todo: 다른 카드와 닿는중에 몬스터 충돌하면 Trigger 씹힘. 카드에 리지디바디 빼면 됐었나?
+        //todo: 다른 카드와 닿는중에 몬스터 충돌하면 Trigger 씹힘. 카드에 리지디바디 빼면 되려나
         private void OnTriggerEnter2D(Collider2D other)
         {
             var obj = other.GetComponent<Entity>(); 
             if (obj == null)
                 return;
-            _target = obj;
-            
-            if (_cardData.GetTarget(_target, _objectType))
+
+            if (_cardData.GetTarget(obj, _objectType))
             {
-                // 닿음
+                _cardView.SetBackEffect(true, Color.green);
+                _target = obj;
             }
             else
-                Debug.Log("충돌시작" + other.name);
+                _cardView.SetBackEffect(true, Color.red);
         }
         
         private void OnTriggerExit2D(Collider2D other)
         {
+            _cardView.SetBackEffect(false);
             _target = null;
         }
 
@@ -73,8 +87,11 @@ namespace DefaultNamespace
 
         public void OnPointerUp(PointerEventData eventData)
         {
-            if(_target == null)
+            if (_target == null)
+            {
+                ResetPos();
                 return;
+            }
 
             if(_objectType.HasFlag(TargetType.Ally) && _gameManager.Turn != Turn.MyTurn)
                     return;
@@ -83,6 +100,7 @@ namespace DefaultNamespace
             
             SoundManager.Instance.PlaySfx("UseCard");
             _gameManager.Action(this, _target);
+            _cardView.SetBackEffect(false);
         }
 
         public void UsedCard()
