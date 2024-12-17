@@ -19,7 +19,7 @@ namespace DefaultNamespace
         public Dictionary<string, List<ISkill>> cardBody = new();
         public Dictionary<string, CostAndTarget> cardCost = new();
         
-        public void Start()
+        public void Init()
         {
             LoadCardCost();
             LoadCardBody();

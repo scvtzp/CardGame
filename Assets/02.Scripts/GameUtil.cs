@@ -69,6 +69,11 @@ namespace DefaultNamespace
             
             localize.OnLocalize(); // 즉시 업데이트
         }
+
+        public static void SetSmartString(this TextMeshProUGUI text, string localizekey ,string changeKey, string changeValue)
+        {
+            text.text = LocalizationManager.GetTranslation(localizekey).Replace($"[{changeKey}]", changeValue);
+        }
         
         /// <summary>
         /// 랜덤 요소 1개 반환

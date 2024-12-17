@@ -175,6 +175,30 @@ MonoBehaviour:
         Deck Building'
       Flags: 0000
       Languages_Touch: []
+    - Term: PlayerTurn
+      TermType: 0
+      Description: 
+      Languages:
+      - "\uD50C\uB808\uC774\uC5B4 \uD134"
+      - Player Turns
+      Flags: 0000
+      Languages_Touch: []
+    - Term: OpponentTurn
+      TermType: 0
+      Description: 
+      Languages:
+      - "\uC0C1\uB300\uC758 \uD134"
+      - Opponent's Turn
+      Flags: 0000
+      Languages_Touch: []
+    - Term: TurnCount
+      TermType: 0
+      Description: 
+      Languages:
+      - 'Turn [Count]'
+      - "[Count]\uBC88\uC9F8 \uD134"
+      Flags: 0000
+      Languages_Touch: []
     CaseInsensitiveTerms: 0
     OnMissingTranslation: 1
     mTerm_AppName: 
@@ -190,7 +214,7 @@ MonoBehaviour:
     Google_WebServiceURL: https://script.google.com/macros/s/AKfycbzjAaT-hDcxSOUuC4v1CUrz8lrfVwvF7Afo_Y7UICLDmxHXmP0qXMdutoyx5iE4vbUHlw/exec
     Google_SpreadsheetKey: 1Y1b2-MqcCXenTkzXc2uPDmcoQhNpgL25QenX6D4Mdfk
     Google_SpreadsheetName: I2Loc CardGame Localization
-    Google_LastUpdatedVersion: 1733661086794
+    Google_LastUpdatedVersion: 1734444881562
     Google_Password: change_this
     GoogleUpdateFrequency: 3
     GoogleInEditorCheckFrequency: 2

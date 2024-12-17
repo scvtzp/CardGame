@@ -72,11 +72,8 @@ namespace Manager
         public Turn Turn { get; private set; } = Turn.MyTurn;
         public List<Entity> team1Entity = new List<Entity>(); //아군 캐릭터들
         public List<Entity> team2Entity = new List<Entity>(); //적 캐릭터들
-        
-        public GameManager()
-        {
-            
-        }
+
+        public int turnCount = 0; //처음엔 0턴이 맞고, 1턴이 되면서(턴 시작 액션 되면서) 게임 시작하는게 맞음.
         
         public void AddDeck(DeckService deck) => decks.AddLast(deck);
         public void AddEntity(Entity entity, TargetType type)
@@ -112,9 +109,14 @@ namespace Manager
         public void Action(Card card, Entity target)
         {
             TriggerManager.Instance.OnTrigger(TriggerType.UseCardStart);
-            
+
             foreach (var skill in card.GetSkill()) //카드 사용
-                skill.StartSkill(target);
+            {
+                if (!skill.NeedSelectTarget)
+                    skill.StartSkill(GetTarget(skill.Target));
+                else
+                    skill.StartSkill(target);
+            }
             
             // 덱에서 버린 더미로 이동
             foreach (var deck in decks)
@@ -141,9 +143,14 @@ namespace Manager
             {
                 cardView.gameObject.SetActive(false);
             });
-            
+
             foreach (var skill in cardData.GetSkill()) //카드 사용
-                skill.StartSkill(GetTarget(cardData._costAndTarget._targetType));
+            {
+                if (!skill.NeedSelectTarget)
+                    skill.StartSkill(GetTarget(skill.Target));
+                else
+                    skill.StartSkill(GetTarget(cardData._costAndTarget._targetType));
+            }
             
             // 덱에서 버린 더미로 이동
             foreach (var deck in decks)
@@ -157,24 +164,16 @@ namespace Manager
         }
 
         private Entity GetTarget(TargetType targetType) => new TargetObject(targetType).GetTarget()[0]; 
-
-        public void EndTurn()
-        {
-            ChangeTurn();
-        }
-
-        private void StartTurn()
-        { 
-            //todo: 스타트/엔드 둘다 카드 액션처럼 델리게이트로 변환.
-        }
             
         public async void ChangeTurn()
         {
             TriggerManager.Instance.OnTrigger(TriggerType.TurnEnd);
             
             Turn = Turn == Turn.MyTurn ? Turn.EnemyTurn : Turn.MyTurn;
+
+            if(Turn == Turn.MyTurn)
+                turnCount++;
             
-            StartTurn();
             TriggerManager.Instance.OnTrigger(TriggerType.TurnStart);
             // 적군은 자동턴.
             if (Turn == Turn.EnemyTurn)
@@ -182,7 +181,8 @@ namespace Manager
                 foreach (var entity in team2Entity)
                     await entity.AutoTurn();
                 
-                EndTurn();
+                //끝나면 자동으로 턴 넘김
+                ChangeTurn();
                 return;
             }
             //나는 그냥 냅둠. todo: 드로우는 시켜주자.
@@ -202,8 +202,8 @@ namespace Manager
             }
             else if (team2Entity.Count == 0)
             {
-                //보상 추가
-
+                turnCount = 0;
+                
                 StageManager.Instance.ChangeStage();
             }
         }
