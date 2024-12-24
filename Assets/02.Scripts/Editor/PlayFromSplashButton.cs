@@ -38,7 +38,7 @@ namespace Editor
 
         private static void PlayFromSplash()
         {
-            string sceneName = "Splash";
+            string sceneName = "SplashScene";
 
             // 현재 씬 저장 여부 확인
             if (EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo())

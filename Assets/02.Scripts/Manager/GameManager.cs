@@ -6,6 +6,7 @@ using DG.Tweening;
 using UnityEngine;
 using Manager.Generics;
 using Skill;
+using UI.TurnChangeView;
 
 namespace Manager
 {
@@ -173,6 +174,9 @@ namespace Manager
 
             if(Turn == Turn.MyTurn)
                 turnCount++;
+            
+            //todo: TurnChangeView 애니메이션 끝나야 턴 바뀌었으면 좋겠음. 
+            ViewManager.Instance.ShowView<TurnChangeView>();
             
             TriggerManager.Instance.OnTrigger(TriggerType.TurnStart);
             // 적군은 자동턴.
