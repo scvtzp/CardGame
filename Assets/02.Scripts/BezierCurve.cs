@@ -1,9 +1,10 @@
 using System.Collections.Generic;
+using Manager.Generics;
 using UnityEngine;
 
 namespace DefaultNamespace
 {
-    public class BezierCurve : MonoBehaviour
+    public class BezierCurve : NonDontDestroySingleton<BezierCurve>
     {
         public Transform startPoint;
         public Transform endPoint;   
@@ -28,6 +29,14 @@ namespace DefaultNamespace
 
         void DrawCurve()
         {
+            if (startPoint == null || endPoint == null)
+            {
+                foreach (var segment in _segmentList)
+                    segment.gameObject.SetActive(false);
+                    
+                return;
+            }
+            
             List<Vector2> points = new List<Vector2>();
             var point = new Vector2(startPoint.position.x, endPoint.position.y + magicNumber);
 
@@ -41,7 +50,11 @@ namespace DefaultNamespace
                 var targetPoint = Vector2.Lerp(line1, line2, t);
                 
                 _segmentList[i-1].position = targetPoint;
-                _segmentList[i-1].localScale = new Vector3(t, t, t);
+                
+                // 점 출력
+                var scale = t <= 0.5 ? (float)t : 0.5f;
+                _segmentList[i-1].localScale = new Vector3(scale, scale, scale);
+                _segmentList[i-1].gameObject.SetActive(true);
                 //points.Add(targetPoint);
             }
             

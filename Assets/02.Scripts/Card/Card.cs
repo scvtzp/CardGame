@@ -46,17 +46,49 @@ namespace DefaultNamespace
         }
         private void ResetPos() => rectTransform.anchoredPosition = startPosition;
         
+        /// <summary>
+        /// 스크롤 시작
+        /// </summary>
         public void OnDrag(PointerEventData eventData)
         { 
-            //TEST
-            if(_objectType.HasFlag(TargetType.Me))
-                return;
-            
             Vector3 worldPosition = Camera.main.ScreenToWorldPoint(eventData.position);
             worldPosition.z = 0f; // 2D에서 z값을 고정
             transform.position = worldPosition;
+            
+            BezierCurve.Instance.startPoint = this.transform;
         }
-        
+
+        //이거 드래그, 클릭 기타등등 건들기만 하면 다 적용되는데 각각 예외처리 해줘야할듯?
+        public void OnPointerClick(PointerEventData eventData)
+        {
+            //클릭했을때 액션
+        }
+
+        public void OnPointerUp(PointerEventData eventData)
+        {
+            BezierCurve.Instance.startPoint = null;
+            
+            if (_target == null)
+            {
+                ResetPos();
+                return;
+            }
+            if(_objectType.HasFlag(TargetType.Ally) && _gameManager.Turn != Turn.MyTurn)
+            {
+                ResetPos();
+                return;
+            }
+            if(_objectType.HasFlag(TargetType.Enemy) && _gameManager.Turn != Turn.EnemyTurn)
+            {
+                ResetPos();
+                return;
+            }
+            
+            SoundManager.Instance.PlaySfx("UseCard");
+            _gameManager.Action(this, _target);
+            _cardView.SetBackEffect(false);
+        }
+
         //todo: 다른 카드와 닿는중에 몬스터 충돌하면 Trigger 씹힘. 카드에 리지디바디 빼면 되려나
         private void OnTriggerEnter2D(Collider2D other)
         {
@@ -78,34 +110,9 @@ namespace DefaultNamespace
             _cardView.SetBackEffect(false);
             _target = null;
         }
-
-        //이거 드래그, 클릭 기타등등 건들기만 하면 다 적용되는데 각각 예외처리 해줘야할듯?
-        public void OnPointerClick(PointerEventData eventData)
-        {
-            //클릭했을때 액션
-        }
-
-        public void OnPointerUp(PointerEventData eventData)
-        {
-            if (_target == null)
-            {
-                ResetPos();
-                return;
-            }
-
-            if(_objectType.HasFlag(TargetType.Ally) && _gameManager.Turn != Turn.MyTurn)
-                    return;
-            if(_objectType.HasFlag(TargetType.Enemy) && _gameManager.Turn != Turn.EnemyTurn)
-                    return;
-            
-            SoundManager.Instance.PlaySfx("UseCard");
-            _gameManager.Action(this, _target);
-            _cardView.SetBackEffect(false);
-        }
-
+        
         public void UsedCard()
         {
-            //gameObject.SetActive(false);
             Destroy(this.gameObject);
         }
 
