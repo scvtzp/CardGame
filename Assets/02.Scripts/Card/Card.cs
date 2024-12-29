@@ -1,12 +1,11 @@
-using System;
 using System.Collections.Generic;
 using Manager;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.Serialization;
 using CardGame.Entity;
+using DG.Tweening;
 using Skill;
-using Unity.VisualScripting;
+using UI;
 
 namespace DefaultNamespace
 {
@@ -15,8 +14,10 @@ namespace DefaultNamespace
     /// </summary>
     public class Card : MonoBehaviour, IDragHandler, IPointerClickHandler, IPointerUpHandler
     {
-        [SerializeField] SpriteRenderer spriteRendererTest;   
-        [SerializeField] DeckService deckService; //테스트용으로 직접 박아줌.   
+        private const float CardActiveY = 375f;
+        
+        [SerializeField] private SpriteRenderer spriteRendererTest;   
+        [SerializeField] private DeckService deckService; //테스트용으로 직접 박아줌.   
         
         public TargetType _objectType; //카드 소유자의 타입.
         
@@ -28,6 +29,7 @@ namespace DefaultNamespace
 
         private Vector3 startPosition;
         private RectTransform rectTransform;
+
         
         public void Init(DeckService deck, CardData data)
         {
@@ -44,18 +46,28 @@ namespace DefaultNamespace
             rectTransform.anchoredPosition = position;
             startPosition = position;
         }
-        private void ResetPos() => rectTransform.anchoredPosition = startPosition;
+
+        private void SelectEnd()
+        {
+            rectTransform.DOKill();
+            rectTransform.DOAnchorPosY(startPosition.y, 0.5f);
+            
+            _cardView.SetBackEffect(false);
+            
+            BezierCurve.Instance.startPoint = null;
+            MousePointer.Instance.SelectCard(null);
+        }
         
         /// <summary>
         /// 스크롤 시작
         /// </summary>
         public void OnDrag(PointerEventData eventData)
         { 
-            Vector3 worldPosition = Camera.main.ScreenToWorldPoint(eventData.position);
-            worldPosition.z = 0f; // 2D에서 z값을 고정
-            transform.position = worldPosition;
+            rectTransform.DOKill();
+            rectTransform.DOAnchorPosY(CardActiveY, 0.5f);
             
             BezierCurve.Instance.startPoint = this.transform;
+            MousePointer.Instance.SelectCard(this);
         }
 
         //이거 드래그, 클릭 기타등등 건들기만 하면 다 적용되는데 각각 예외처리 해줘야할듯?
@@ -66,46 +78,43 @@ namespace DefaultNamespace
 
         public void OnPointerUp(PointerEventData eventData)
         {
-            BezierCurve.Instance.startPoint = null;
-            
             if (_target == null)
             {
-                ResetPos();
+                SelectEnd();
                 return;
             }
             if(_objectType.HasFlag(TargetType.Ally) && _gameManager.Turn != Turn.MyTurn)
             {
-                ResetPos();
+                SelectEnd();
                 return;
             }
             if(_objectType.HasFlag(TargetType.Enemy) && _gameManager.Turn != Turn.EnemyTurn)
             {
-                ResetPos();
+                SelectEnd();
                 return;
             }
             
             SoundManager.Instance.PlaySfx("UseCard");
             _gameManager.Action(this, _target);
-            _cardView.SetBackEffect(false);
+            SelectEnd();
         }
 
         //todo: 다른 카드와 닿는중에 몬스터 충돌하면 Trigger 씹힘. 카드에 리지디바디 빼면 되려나
-        private void OnTriggerEnter2D(Collider2D other)
+        public void TriggerEnter(Entity entity)
         {
-            var obj = other.GetComponent<Entity>(); 
-            if (obj == null)
-                return;
-
-            if (_cardData.GetTarget(obj, _objectType))
+            if (_cardData.GetTarget(entity, _objectType))
             {
                 _cardView.SetBackEffect(true, Color.green);
-                _target = obj;
+                _target = entity;
             }
             else
+            {
                 _cardView.SetBackEffect(true, Color.red);
+                _target = null;
+            }
         }
         
-        private void OnTriggerExit2D(Collider2D other)
+        public void TriggerExit()
         {
             _cardView.SetBackEffect(false);
             _target = null;
