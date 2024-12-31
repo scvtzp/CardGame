@@ -1,7 +1,9 @@
+using DG.DemiEditor;
 using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEngine;
-    
+using UnityToolbarExtender;
+
 namespace Editor
 {
     [InitializeOnLoad]
@@ -9,45 +11,49 @@ namespace Editor
     {
         static PlayFromSplashButton()
         {
-            // 에디터 상단의 툴바를 렌더링하는 콜백 등록
-            EditorApplication.update += AddToolbarButton;
+            ToolbarExtender.LeftToolbarGUI.Add(OnLeftToolbarGUI);
+            ToolbarExtender.RightToolbarGUI.Add(OnRightToolbarGUI);
         }
 
-        private static void AddToolbarButton()
+        private static void OnLeftToolbarGUI()
         {
-            // 툴바에 GUI를 그리기 위해 반복 실행
-            SceneView.duringSceneGui -= OnSceneGUI;
-            SceneView.duringSceneGui += OnSceneGUI;
-        }
+            GUILayout.FlexibleSpace();
 
-        private static void OnSceneGUI(SceneView sceneView)
-        {
-            Handles.BeginGUI();
-
-            // 툴바 버튼의 위치 정의
-            Rect buttonRect = new Rect(10, 10, 100, 30);
-
-            // 버튼 생성
-            if (GUI.Button(buttonRect, "Play Splash"))
+            if (GUILayout.Button(new GUIContent("Splash", "SplashScene으로 이동합니다"), EditorStyles.miniButtonLeft))
             {
-                PlayFromSplash();
+                ChangeScene("SplashScene");
             }
 
-            Handles.EndGUI();
+            GUILayout.Space(10);
+            
+            if (GUILayout.Button(new GUIContent("InGameScene", "InGameScene으로 이동합니다"), EditorStyles.miniButtonLeft))
+            {
+                ChangeScene("InGameScene");
+            }
+        }
+        
+        private static void OnRightToolbarGUI()
+        {
+            // 이거 키면 오른쪽으로 버튼이 붙음. 이유 몰루 EditerStyles 바꿔봐도 그대로. 주석처리하면 되길래 그냥 주석처리.
+            //GUILayout.FlexibleSpace();
+            
+            GUILayout.Space(3);
+            if (GUILayout.Button(new GUIContent("Play", "스플래시 씬으로 변경 후 실행합니다."), GUILayout.ExpandWidth(false)))
+            {
+                ChangeScene("SplashScene");
+                
+                // 플레이 모드 시작
+                EditorApplication.isPlaying = true;
+            }
         }
 
-        private static void PlayFromSplash()
+        private static void ChangeScene(string sceneName)
         {
-            string sceneName = "SplashScene";
-
             // 현재 씬 저장 여부 확인
             if (EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo())
             {
                 // 씬 열기
                 EditorSceneManager.OpenScene($"Assets/01.Scenes/{sceneName}.unity");
-
-                // 플레이 모드 시작
-                EditorApplication.isPlaying = true;
             }
         }
     }
