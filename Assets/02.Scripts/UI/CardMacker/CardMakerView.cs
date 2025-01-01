@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Cysharp.Threading.Tasks;
 using DefaultNamespace;
 using Manager;
 using UI.UIBase;
@@ -35,7 +36,7 @@ namespace UI.CardMacker
             }
         }
 
-        public override async Task ShowStart()
+        public override async UniTask ShowStart()
         {
             await UpdateData();
         }

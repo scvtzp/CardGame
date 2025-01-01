@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using System.Threading.Tasks;
+using Cysharp.Threading.Tasks;
 using Manager.Generics;
 using UI.UIBase;
 using UnityEditor;
@@ -13,32 +15,32 @@ namespace Manager
         private Dictionary<string, ViewBase> _views = new Dictionary<string, ViewBase>();
         private GameObject _root;
 
-        public void ShowView<T>() where T : ViewBase 
+        public async UniTask ShowView<T>() where T : ViewBase 
         {
-            ShowView(typeof(T).Name);
+            await ShowView(typeof(T).Name);
         }
 
-        public void ShowView(string viewName)
+        public async UniTask ShowView(string viewName)
         {
             if (_views.TryGetValue(viewName, out ViewBase view))
-                ShowView(view);
+                await ShowView(view);
             
             else
             {
-                Addressables.LoadAssetAsync<GameObject>($"Assets/03.Prefabs/View/{viewName}.prefab").Completed += handle =>
+                AsyncOperationHandle<GameObject> handle = Addressables.LoadAssetAsync<GameObject>($"Assets/03.Prefabs/View/{viewName}.prefab");
+                await handle.Task;
+                
+                if (handle.Status == AsyncOperationStatus.Succeeded)
                 {
-                    if (handle.Status == AsyncOperationStatus.Succeeded)
-                    {
-                        var prefab = handle.Result;
+                    var prefab = handle.Result;
                         
-                        view = GameObject.Instantiate(prefab, GetCanvas()).GetComponent<ViewBase>();
-                        _views.Add(viewName, view);
-                        view.Init();
-                        ShowView(view);
-                    }
-                    else
-                        Debug.LogWarning($"어드레서블에서 {viewName}를 찾을 수 없습니다.");
-                };
+                    view = GameObject.Instantiate(prefab, GetCanvas()).GetComponent<ViewBase>();
+                    _views.Add(viewName, view);
+                    view.Init();
+                    await ShowView(view);
+                }
+                else
+                    Debug.LogWarning($"어드레서블에서 {viewName}를 찾을 수 없습니다.");
             }
         }
         
@@ -60,11 +62,11 @@ namespace Manager
             }
         }
         
-        private async void ShowView(ViewBase view)
+        private async Task ShowView(ViewBase view)
         {
             await view.ShowStart();
             view.Show();
-            view.ShowEnd();
+            await view.ShowEnd();
         }
         
         public void HideView<T>() where T : ViewBase => HideView(typeof(T).Name);

@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using _02.Scripts.Manager;
 using DefaultNamespace;
 using CardGame.Entity;
+using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using UnityEngine;
 using Manager.Generics;
@@ -134,16 +135,16 @@ namespace Manager
         /// 오토용. 사실 Card를 매개변수로 넘겨주는게 말이안된다. 일반 로직도 CardData로 수정.
         /// </summary>
         /// <param name="cardData"></param>
-        public async void Action(CardData cardData)
+        public async UniTask Action(CardData cardData)
         {
             TriggerManager.Instance.OnTrigger(TriggerType.UseCardStart);
             
             await cardView.UpdateData(cardData);
+            
+            // 카드 쓰는거 보여주는 장면.
             cardView.gameObject.SetActive(true);
-            DOVirtual.DelayedCall(0.45f, () => 
-            {
-                cardView.gameObject.SetActive(false);
-            });
+            await UniTask.Delay(500);
+            cardView.gameObject.SetActive(false);
 
             foreach (var skill in cardData.GetSkill()) //카드 사용
             {
@@ -175,8 +176,8 @@ namespace Manager
             if(Turn == Turn.MyTurn)
                 turnCount++;
             
-            //todo: TurnChangeView 애니메이션 끝나야 턴 바뀌었으면 좋겠음. 
-            ViewManager.Instance.ShowView<TurnChangeView>();
+            //todo: TurnChangeView 애니메이션 끝나야 턴 바뀌었으면 좋겠음.
+            await ViewManager.Instance.ShowView<TurnChangeView>();
             
             TriggerManager.Instance.OnTrigger(TriggerType.TurnStart);
             // 적군은 자동턴.

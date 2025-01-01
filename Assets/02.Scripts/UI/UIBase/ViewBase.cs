@@ -1,4 +1,5 @@
 using System.Threading.Tasks;
+using Cysharp.Threading.Tasks;
 using Manager;
 using UnityEngine;
 
@@ -11,7 +12,7 @@ namespace UI.UIBase
             
         } 
         
-        public async virtual Task ShowStart()
+        public async virtual UniTask ShowStart()
         {
             return;
         }
@@ -21,9 +22,9 @@ namespace UI.UIBase
             gameObject.SetActive(true);
         }
         
-        public virtual void ShowEnd()
+        public async virtual UniTask ShowEnd()
         {
-            
+            return;
         }
 
         public virtual void HideStart()

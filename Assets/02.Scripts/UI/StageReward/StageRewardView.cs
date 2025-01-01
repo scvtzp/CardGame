@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Cysharp.Threading.Tasks;
 using UI.UIBase;
 using UnityEngine;
 
@@ -18,7 +19,7 @@ namespace UI.StageReward
             scrollView.PreInit(_presenter);
         }
         
-        public async override Task ShowStart()
+        public async override UniTask ShowStart()
         {
             base.ShowStart();
             _presenter.Init();

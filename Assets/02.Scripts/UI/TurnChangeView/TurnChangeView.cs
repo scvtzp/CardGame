@@ -1,4 +1,5 @@
-using System.Threading.Tasks;
+using System;
+using Cysharp.Threading.Tasks;
 using DefaultNamespace;
 using DG.Tweening;
 using I2.Loc;
@@ -21,22 +22,43 @@ namespace UI.TurnChangeView
             _rectTransform = GetComponent<RectTransform>(); 
         }
 
-        public override Task ShowStart()
+        public override async UniTask ShowStart()
         {
-            //titleText.SetTermAndRefresh("Turn Change");
-            turnText.SetSmartString("TurnCount","Count", GameManager.Instance.turnCount.ToString());
+            TextSetting();
+            return;
+        }
+
+        public override async UniTask ShowEnd()
+        {
+            await StartAnimation();
+        }
+
+        public override void HideEnd()
+        {
+            _rectTransform.anchoredPosition = new Vector2(_rectTransform.anchoredPosition.x, 0);
+        }
+
+        private async UniTask StartAnimation()
+        {
+            await _rectTransform.DOAnchorPosY(-100, 1.3f).SetEase(Ease.OutBounce).ToUniTask();
             
-            return base.ShowStart();
+            OnPressedBackKey();
+            return;
         }
 
-        public override void ShowEnd()
+        private void TextSetting()
         {
-            StartAnimation();
-        }
-
-        private async void StartAnimation()
-        {
-            _rectTransform.DOAnchorPosY(-100, 1.3f).SetEase(Ease.OutBounce).OnComplete(OnPressedBackKey);
+            switch (GameManager.Instance.Turn)
+            {
+                case Turn.MyTurn:
+                    titleText.SetTermAndRefresh("PlayerTurn");
+                    break;
+                case Turn.EnemyTurn:
+                    titleText.SetTermAndRefresh("OpponentTurn");
+                    break;
+            }
+            
+            turnText.SetSmartString("TurnCount","Count", GameManager.Instance.turnCount.ToString());
         }
     }
 }

@@ -71,8 +71,8 @@ namespace CardGame.Entity
             var handCopy = new List<CardData>(deckService.Hand);
             foreach (var cardData in handCopy)
             {
-                await Task.Delay(500);
-                _gameManager.Action(cardData);
+                await Task.Delay(1000);
+                await _gameManager.Action(cardData);
             }
         }
 
