@@ -162,7 +162,10 @@ PlayerSettings:
   androidSupportedAspectRatio: 1
   androidMaxAspectRatio: 2.1
   androidMinAspectRatio: 1
-  applicationIdentifier: {}
+  applicationIdentifier:
+    Android: com.DefaultCompany.CardGame
+    Standalone: com.DefaultCompany.CardGame
+    iPhone: com.DefaultCompany.CardGame
   buildNumber:
     Standalone: 0
     VisionOS: 0
@@ -496,7 +499,13 @@ PlayerSettings:
   m_BuildTargetGroupLightmapSettings: []
   m_BuildTargetGroupLoadStoreDebugModeSettings: []
   m_BuildTargetNormalMapEncoding: []
-  m_BuildTargetDefaultTextureCompressionFormat: []
+  m_BuildTargetDefaultTextureCompressionFormat:
+  - serializedVersion: 3
+    m_BuildTarget: Android
+    m_Formats: 01000000
+  - serializedVersion: 3
+    m_BuildTarget: iOS
+    m_Formats: 03000000
   playModeTestRunnerEnabled: 0
   runPlayModeTestAsEditModeTest: 0
   actionOnDotNetUnhandledException: 1
@@ -763,7 +772,7 @@ PlayerSettings:
   webGLCloseOnQuit: 0
   webWasm2023: 0
   scriptingDefineSymbols:
-    Android: DOTWEEN;TextMeshPro
+    Android: DOTWEEN;TextMeshPro;UNITASK_DOTWEEN_SUPPORT
     EmbeddedLinux: DOTWEEN;TextMeshPro
     GameCoreScarlett: DOTWEEN
     GameCoreXboxOne: DOTWEEN;TextMeshPro
@@ -774,12 +783,12 @@ PlayerSettings:
     QNX: DOTWEEN;TextMeshPro
     ReservedCFE: TextMeshPro
     Stadia: DOTWEEN
-    Standalone: DOTWEEN;TextMeshPro
+    Standalone: DOTWEEN;TextMeshPro;UNITASK_DOTWEEN_SUPPORT
     VisionOS: DOTWEEN;TextMeshPro
     WebGL: DOTWEEN;TextMeshPro
     Windows Store Apps: DOTWEEN
     XboxOne: DOTWEEN;TextMeshPro
-    iPhone: DOTWEEN;TextMeshPro
+    iPhone: DOTWEEN;TextMeshPro;UNITASK_DOTWEEN_SUPPORT
     tvOS: DOTWEEN;TextMeshPro
   additionalCompilerArguments: {}
   platformArchitecture: {}
