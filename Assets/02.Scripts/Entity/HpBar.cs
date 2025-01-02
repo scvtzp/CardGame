@@ -1,3 +1,4 @@
+using DG.Tweening;
 using TMPro;
 using UnityEngine;
 
@@ -12,8 +13,8 @@ namespace CardGame.Entity
         {
             float fillAmount = (float)curHp / maxHp;
             if (fillAmount < 0) fillAmount = 0;
-            
-            fillTransform.localScale = new Vector3(fillAmount, 1, 1);
+
+            fillTransform.DOScaleX(fillAmount, 0.5f).SetEase(Ease.OutQuint);
             text.text = $"{curHp}/{maxHp}";
         }
     }
