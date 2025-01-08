@@ -1,6 +1,7 @@
-using System.Collections.Generic;
+    using System.Collections.Generic;
 using System.Threading.Tasks;
 using _02.Scripts.Manager;
+using Cysharp.Threading.Tasks;
 using DefaultNamespace;
 using Manager;
 using UnityEngine;
@@ -29,7 +30,8 @@ namespace CardGame.Entity
             boxCollider.size = spriteRenderer.bounds.size;
             boxCollider.offset = spriteRenderer.bounds.center - transform.position;
 
-            entityView?.ChangeHp(hp, maxhp);
+            hp = maxhp;
+            entityView?.Init(maxhp);
             
             if (deckService != null)
                 _gameManager.AddDeck(deckService);
@@ -37,15 +39,16 @@ namespace CardGame.Entity
         
         
         //todo: 여기 rx구독으로 변경
-        public void ChangeHp(int amount)
+        public async UniTaskVoid ChangeHp(int amount)
         {
             if(maxhp < hp + amount)
                 amount = maxhp - hp;
             hp += amount;
             Debug.Log($"{gameObject.name} 현재 hp:{hp}");
             
-            entityView?.ChangeHp(hp, maxhp);
             splashParticles.SpawnParticle(transform.position, $"{amount}", amount > 0? Color.green: Color.red);
+            if(entityView != null)
+                await entityView.ChangeHp(hp, maxhp);
             
             if(hp <= 0)
                 _gameManager.KillAction(this);
