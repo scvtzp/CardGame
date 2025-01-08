@@ -42,7 +42,7 @@ namespace UI.StageReward
         public void GetReward(int index)
         {
             ItemManager.Instance.GetItem(_rewards[index]);
-            ViewManager.Instance.HideView<StageRewardView>();
+            ViewManager.Instance.HideView<StageRewardView>(); 
         }
     }
 }

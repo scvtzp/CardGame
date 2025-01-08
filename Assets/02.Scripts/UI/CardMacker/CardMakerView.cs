@@ -50,6 +50,8 @@ namespace UI.CardMacker
         public void OnPressedBackKey()
         {
             ViewManager.Instance.HideView<CardMakerView>();
+            //todo: 이거 따로 GetRewardDone 시그널같은걸로 쏴야할듯
+            StageManager.Instance.ChangeStage();
         }
     }
 }

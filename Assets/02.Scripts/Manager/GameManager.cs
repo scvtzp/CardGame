@@ -7,6 +7,7 @@ using DG.Tweening;
 using UnityEngine;
 using Manager.Generics;
 using Skill;
+using UI.StageReward;
 using UI.TurnChangeView;
 
 namespace Manager
@@ -208,8 +209,7 @@ namespace Manager
             else if (team2Entity.Count == 0)
             {
                 turnCount = 0;
-                
-                StageManager.Instance.ChangeStage();
+                ViewManager.Instance.ShowView<StageRewardView>();
             }
         }
     }

@@ -20,6 +20,9 @@ namespace Manager
             else
             {
                 PlayerModel.Instance.Gold.Value -= data.Count; //todo: 카운트가 아니라 price여야할거같은데?
+                
+                //todo: 이거 따로 GetRewardDone 시그널같은걸로 쏴야할듯
+                StageManager.Instance.ChangeStage();
             }
         }
 

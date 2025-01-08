@@ -34,7 +34,6 @@ namespace Manager
         {
             Stage.Value++;
             Debug.Log("stage: " + Stage);
-            ViewManager.Instance.ShowView<StageRewardView>();
             StartNewStage();
         }
 
