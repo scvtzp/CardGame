@@ -199,6 +199,62 @@ MonoBehaviour:
       - "[Count]\uBC88\uC9F8 \uD134"
       Flags: 0000
       Languages_Touch: []
+    - Term: Twinspell
+      TermType: 0
+      Description: 
+      Languages:
+      - "\uC774\uC911 \uC8FC\uBB38"
+      - Twinspell
+      Flags: 0000
+      Languages_Touch: []
+    - Term: Tradeable
+      TermType: 0
+      Description: 
+      Languages:
+      - "\uAD50\uD658\uC131"
+      - Tradeable
+      Flags: 0000
+      Languages_Touch: []
+    - Term: Quickdraw
+      TermType: 0
+      Description: 
+      Languages:
+      - "\uBE68\uB9AC\uBF51\uAE30"
+      - Quickdraw
+      Flags: 0000
+      Languages_Touch: []
+    - Term: Exhaust
+      TermType: 0
+      Description: 
+      Languages:
+      - "\uC18C\uBA78"
+      - Exhaust
+      Flags: 0000
+      Languages_Touch: []
+    - Term: Combo
+      TermType: 0
+      Description: 
+      Languages:
+      - "\uC5F0\uACC4"
+      - Combo
+      Flags: 0000
+      Languages_Touch: []
+    - Term: Lifesteal
+      TermType: 0
+      Description: 
+      Languages:
+      - "\uC0DD\uBA85\uB825 \uD761\uC218"
+      - Lifesteal
+      Flags: 0000
+      Languages_Touch: []
+    - Term: Overkill
+      TermType: 0
+      Description: 
+      Languages:
+      - "\uC555\uC0B4"
+      - Overkill
+      Flags: 0000
+      Languages_Touch: []
     CaseInsensitiveTerms: 0
     OnMissingTranslation: 1
     mTerm_AppName: 
@@ -214,7 +270,7 @@ MonoBehaviour:
     Google_WebServiceURL: https://script.google.com/macros/s/AKfycbzjAaT-hDcxSOUuC4v1CUrz8lrfVwvF7Afo_Y7UICLDmxHXmP0qXMdutoyx5iE4vbUHlw/exec
     Google_SpreadsheetKey: 1Y1b2-MqcCXenTkzXc2uPDmcoQhNpgL25QenX6D4Mdfk
     Google_SpreadsheetName: I2Loc CardGame Localization
-    Google_LastUpdatedVersion: 1734444881562
+    Google_LastUpdatedVersion: 1736431906144
     Google_Password: change_this
     GoogleUpdateFrequency: 3
     GoogleInEditorCheckFrequency: 2

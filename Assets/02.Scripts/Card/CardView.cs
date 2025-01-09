@@ -17,7 +17,8 @@ namespace DefaultNamespace
         [SerializeField] private Image image;
         [SerializeField] private Localize title;
         [SerializeField] private TextMeshProUGUI type; // 타입은 슬더스 형식이라 일단 뒀는데 아마 나중에 빠지지 않을까? 싶네.
-        [SerializeField] private Localize desc;
+        [SerializeField] private Localize desc;        // 일반 카드 설명
+        [SerializeField] private Localize addDesc;     // 부가효과 타이틀
         [SerializeField] private TextMeshProUGUI cost;
         [SerializeField] private TextMeshProUGUI target;
         [SerializeField] private Image backEffect;
