@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using AddSkill;
 using CardGame.Entity;
 using Manager;
 using Skill;
@@ -14,7 +15,7 @@ namespace DefaultNamespace
         public string CardId; //카드 자체 id
         public CostAndTarget _costAndTarget { get; private set; }
         private List<ISkill> _skill = new();
-        //todo: 부가효과 도대체 어케함?
+        private IAddSkill _addSkill;
 
         public CardData()
         {
@@ -34,6 +35,14 @@ namespace DefaultNamespace
             _costAndTarget = new CostAndTarget(cardData._costAndTarget);
             _skill = cardData._skill.Select(skill => skill.Clone()).ToList();
             CardId = cardData.CardId;
+        }
+
+        public CardData(CostAndTarget costAndTarget, List<ISkill> skill)
+        {
+            id = CardIDManager.Instance.GetInstanceID();
+            _addSkill = null;
+            _skill = skill;
+            _costAndTarget = costAndTarget;
         }
 
         public void Reset()
@@ -74,5 +83,6 @@ namespace DefaultNamespace
         public bool isSetDone() => _costAndTarget != null && _skill != null;
 
         public List<ISkill> GetSkill() => _skill;
+        public IAddSkill GetAddSkill() => _addSkill;
     }
 }

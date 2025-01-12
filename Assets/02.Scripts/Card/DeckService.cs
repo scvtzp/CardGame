@@ -60,6 +60,15 @@ namespace DefaultNamespace
             GameUtil.ShuffleCollection<CardData>(_deck);
         }
         
+        // 핸드에 바로 카드를 꽂아넣는다. 드로우 취급 x
+        public void AddCardInHand(CardData cardData)
+        {
+            var card = new CardData(cardData);
+            _allCardID.Add(card.id);
+            OnDraw?.Invoke();
+            Hand.Add(card);
+        }
+        
         //todo: 삭제하고 아래의 CardData기반으로 통폐합.
         public void UseCard(Card card)
         {

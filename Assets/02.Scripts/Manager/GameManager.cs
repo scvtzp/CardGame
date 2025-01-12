@@ -3,7 +3,6 @@ using _02.Scripts.Manager;
 using DefaultNamespace;
 using CardGame.Entity;
 using Cysharp.Threading.Tasks;
-using DG.Tweening;
 using UnityEngine;
 using Manager.Generics;
 using Skill;
@@ -77,6 +76,7 @@ namespace Manager
         public List<Entity> team2Entity = new List<Entity>(); //적 캐릭터들
 
         public int turnCount = 0; //처음엔 0턴이 맞고, 1턴이 되면서(턴 시작 액션 되면서) 게임 시작하는게 맞음.
+        public Entity turnOwnerEntity;
         
         public void AddDeck(DeckService deck) => decks.AddLast(deck);
         public void AddEntity(Entity entity, TargetType type)
@@ -112,13 +112,18 @@ namespace Manager
         public void Action(Card card, Entity target)
         {
             TriggerManager.Instance.OnTrigger(TriggerType.UseCardStart);
-
+            
             foreach (var skill in card.GetSkill()) //카드 사용
             {
+                Entity entity = target;
+                
                 if (!skill.NeedSelectTarget)
-                    skill.StartSkill(GetTarget(skill.Target));
-                else
-                    skill.StartSkill(target);
+                    entity = GetTarget(skill.Target);
+
+                //부가효과 시작.
+                card.GetAddSkill()?.AddSkillStart(entity, card._cardData);
+                
+                skill.StartSkill(entity);
             }
             
             // 덱에서 버린 더미로 이동
@@ -127,6 +132,9 @@ namespace Manager
                 if(deck.ContainsCard(card._cardData))
                     deck.UseCard(card);
             }
+            
+            //부가효과 종료 안내.
+            card.GetAddSkill()?.AddSkillEnd();
             //todo: 버린더미로 이동될 때 ~~~ 로직 추가
             
             TriggerManager.Instance.OnTrigger(TriggerType.UseCardEnd);
@@ -146,21 +154,29 @@ namespace Manager
             cardView.gameObject.SetActive(true);
             await UniTask.Delay(500);
             cardView.gameObject.SetActive(false);
-
+            
             foreach (var skill in cardData.GetSkill()) //카드 사용
             {
+                Entity target; 
+                
                 if (!skill.NeedSelectTarget)
-                    skill.StartSkill(GetTarget(skill.Target));
+                    target = GetTarget(skill.Target);
                 else
-                    skill.StartSkill(GetTarget(cardData._costAndTarget._targetType));
+                    target = GetTarget(cardData._costAndTarget._targetType);
+
+                //부가효과 시작.
+                cardData.GetAddSkill()?.AddSkillStart(target, cardData);
+                skill.StartSkill(target);
             }
-            
             // 덱에서 버린 더미로 이동
             foreach (var deck in decks)
             {
                 if(deck.ContainsCard(cardData))
                     deck.UseCard(cardData);
             }
+            
+            //부가효과 종료 안내.
+            cardData.GetAddSkill()?.AddSkillEnd();
             //todo: 버린더미로 이동될 때 ~~~ 로직 추가
             
             TriggerManager.Instance.OnTrigger(TriggerType.UseCardEnd);
@@ -185,7 +201,10 @@ namespace Manager
             if (Turn == Turn.EnemyTurn)
             {
                 foreach (var entity in team2Entity)
+                {
+                    turnOwnerEntity = entity;
                     await entity.AutoTurn();
+                }
                 
                 //끝나면 자동으로 턴 넘김
                 ChangeTurn();
@@ -195,7 +214,10 @@ namespace Manager
             else
             {
                 foreach (var entity in team1Entity)
+                {
+                    turnOwnerEntity = entity;
                     entity.StartTurn();
+                }
             }
         }
         

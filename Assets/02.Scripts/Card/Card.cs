@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using AddSkill;
 using Manager;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -99,7 +100,6 @@ namespace DefaultNamespace
             SelectEnd();
         }
 
-        //todo: 다른 카드와 닿는중에 몬스터 충돌하면 Trigger 씹힘. 카드에 리지디바디 빼면 되려나
         public void TriggerEnter(Entity entity)
         {
             if (_cardData.GetTarget(entity, _objectType))
@@ -126,5 +126,6 @@ namespace DefaultNamespace
         }
 
         public List<ISkill> GetSkill() => _cardData.GetSkill();
+        public IAddSkill GetAddSkill() => _cardData.GetAddSkill();
     }
 }
