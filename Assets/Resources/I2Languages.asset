@@ -199,7 +199,7 @@ MonoBehaviour:
       - "[Count]\uBC88\uC9F8 \uD134"
       Flags: 0000
       Languages_Touch: []
-    - Term: Twinspell
+    - Term: TwinSpell
       TermType: 0
       Description: 
       Languages:
@@ -239,20 +239,12 @@ MonoBehaviour:
       - Combo
       Flags: 0000
       Languages_Touch: []
-    - Term: Lifesteal
+    - Term: LifeSteal
       TermType: 0
       Description: 
       Languages:
       - "\uC0DD\uBA85\uB825 \uD761\uC218"
       - Lifesteal
-      Flags: 0000
-      Languages_Touch: []
-    - Term: Overkill
-      TermType: 0
-      Description: 
-      Languages:
-      - "\uC555\uC0B4"
-      - Overkill
       Flags: 0000
       Languages_Touch: []
     CaseInsensitiveTerms: 0
@@ -270,7 +262,7 @@ MonoBehaviour:
     Google_WebServiceURL: https://script.google.com/macros/s/AKfycbzjAaT-hDcxSOUuC4v1CUrz8lrfVwvF7Afo_Y7UICLDmxHXmP0qXMdutoyx5iE4vbUHlw/exec
     Google_SpreadsheetKey: 1Y1b2-MqcCXenTkzXc2uPDmcoQhNpgL25QenX6D4Mdfk
     Google_SpreadsheetName: I2Loc CardGame Localization
-    Google_LastUpdatedVersion: 1736431906144
+    Google_LastUpdatedVersion: 1736774339867
     Google_Password: change_this
     GoogleUpdateFrequency: 3
     GoogleInEditorCheckFrequency: 2

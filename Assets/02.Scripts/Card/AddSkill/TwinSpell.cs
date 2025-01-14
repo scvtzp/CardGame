@@ -8,7 +8,7 @@ namespace AddSkill
     {
         public void AddSkillStart(Entity entity, CardData cardData)
         {
-            CardData usedCard= new CardData(cardData._costAndTarget, cardData.GetSkill());
+            CardData usedCard = new CardData(cardData._costAndTarget, cardData.GetSkill());
             entity.deckService.AddCardInHand(usedCard);
         }
 

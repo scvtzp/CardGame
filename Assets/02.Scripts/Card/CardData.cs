@@ -27,6 +27,15 @@ namespace DefaultNamespace
             _costAndTarget = new CostAndTarget(cost, targetType);
             _skill = skill;
             CardId = cardId;
+            _addSkill = null;
+        } 
+        
+        public CardData(int cost, TargetType targetType, List<ISkill> skill, string cardId, IAddSkill addSkill)
+        {
+            _costAndTarget = new CostAndTarget(cost, targetType);
+            _skill = skill;
+            CardId = cardId;
+            _addSkill = addSkill;
         }
 
         public CardData(CardData cardData)
@@ -35,6 +44,7 @@ namespace DefaultNamespace
             _costAndTarget = new CostAndTarget(cardData._costAndTarget);
             _skill = cardData._skill.Select(skill => skill.Clone()).ToList();
             CardId = cardData.CardId;
+            _addSkill = cardData._addSkill;
         }
 
         public CardData(CostAndTarget costAndTarget, List<ISkill> skill)
@@ -50,6 +60,7 @@ namespace DefaultNamespace
             CardId = "";
             _costAndTarget = null;
             _skill = null;
+            _addSkill = null;
         }
         
         public bool GetTarget(Entity target, TargetType objectType)

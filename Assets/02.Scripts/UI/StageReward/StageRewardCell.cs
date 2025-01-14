@@ -27,6 +27,7 @@ namespace UI.StageReward
         [SerializeField] private TextMeshProUGUI priceText;
         [SerializeField] private CardView cardCostCell;
         [SerializeField] private CardView cardBodyCell;
+        [SerializeField] private CardView cardAddSkillCell;
         
         public void UpdateData(ItemData data)
         {
@@ -44,6 +45,11 @@ namespace UI.StageReward
             {
                 cardBodyCell.gameObject.SetActive(true);
                 cardBodyCell.UpdateData(data.Id.Split("part_")[1]);
+            }
+            else if (data.Id.Contains("part_AddSkill_")) //부가효과 처리.
+            {
+                cardAddSkillCell.gameObject.SetActive(true);
+                cardAddSkillCell.UpdateData(data.Id.Split("part_AddSkill_")[1]);
             }
             else
             {

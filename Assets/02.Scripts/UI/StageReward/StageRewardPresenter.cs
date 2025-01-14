@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using AddSkill;
 using DefaultNamespace;
 using Manager;
 
@@ -12,12 +13,14 @@ namespace UI.StageReward
         private List<ItemData> _rewards; 
         private readonly List<string> _cardCostKeys; 
         private readonly List<string> _cardBodyKeys; 
+        private readonly List<IAddSkill> _cardAddSkillKeys; 
         
         public StageRewardPresenter(StageRewardView view)
         {
             _view = view;
             _cardCostKeys = DefaultDeckManager.Instance.cardCost.Keys.ToList();
             _cardBodyKeys = DefaultDeckManager.Instance.cardBody.Keys.ToList();
+            _cardAddSkillKeys = DefaultDeckManager.Instance.cardAddSkill;
         }
         
         public void Init()
@@ -31,10 +34,10 @@ namespace UI.StageReward
         {
             _rewards = new List<ItemData>();
             
-            //_rewards.Add(new ItemData("A", -100));
+            _rewards.Add(new ItemData("A", -100));
             _rewards.Add(new ItemData($"part_{_cardBodyKeys.GetRandomElement()}", 1));
             _rewards.Add(new ItemData($"part_{_cardCostKeys.GetRandomElement()}", 1));
-            //_rewards.Add(new ItemData("D", 1));
+            _rewards.Add(new ItemData($"part_AddSkill_{_cardAddSkillKeys.GetRandomElement().GetType().Name}", 1));
             
             return _rewards;
         }

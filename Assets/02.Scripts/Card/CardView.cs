@@ -22,14 +22,15 @@ namespace DefaultNamespace
         [SerializeField] private TextMeshProUGUI cost;
         [SerializeField] private TextMeshProUGUI target;
         [SerializeField] private Image backEffect;
-
+        
         public async Task UpdateData(CardData cardData)
         {
             await UpdateData(cardData.CardId);
             UpdateData(cardData._costAndTarget);
+            UpdateAddSkillData(cardData.GetAddSkill() == null ? "empty" : cardData.GetAddSkill().GetType().Name);
         }
 
-        public async void UpdateData(CostAndTarget costAndTarget)
+        public void UpdateData(CostAndTarget costAndTarget)
         {
             if (cost != null && target != null)
             {
@@ -54,6 +55,12 @@ namespace DefaultNamespace
                 title.SetTermAndRefresh(bodyId);
             if(desc != null)
                 desc.SetTermAndRefresh($"desc_{bodyId}");
+        }
+
+        public void UpdateAddSkillData(string skillId)
+        {
+            if (addDesc != null)
+                addDesc.SetTermAndRefresh(skillId);
         }
 
         public void SetBackEffect(bool check, Color color)

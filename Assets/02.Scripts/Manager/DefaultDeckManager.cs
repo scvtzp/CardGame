@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using System.Reflection;
+using AddSkill;
 using Manager;
 using Manager.Generics;
 using Skill;
@@ -18,11 +19,13 @@ namespace DefaultNamespace
 
         public Dictionary<string, List<ISkill>> cardBody = new();
         public Dictionary<string, CostAndTarget> cardCost = new();
+        public List<IAddSkill> cardAddSkill = new();
         
         public void Init()
         {
             LoadCardCost();
             LoadCardBody();
+            LoadAddSkill();
             LoadEntityDefaultDeck();
         }
 
@@ -39,6 +42,21 @@ namespace DefaultNamespace
                     target |= Enum.Parse<TargetType>(str);
                 
                 cardCost.Add(columns[0], new CostAndTarget(int.Parse(columns[1]), target));
+            }
+        }
+
+        //todo: 나중에 그냥 폴더 인식해서 Card/AddSkill/안에 있는 모든 파일 가져오게 해도 상관없을듯. 굳이 차트로 관리를?
+        private void LoadAddSkill()
+        {
+            TextAsset csvFile = Resources.Load<TextAsset>("AddSkillSetting");
+            string[] lines = csvFile.text.Split('\n');
+            
+            for (var index = 1; index < lines.Length; index++) //인덱스 0은 맨 윗줄. (id, 닉네임, 클래스 써있는곳)
+            {
+                string id = lines[index];
+                IAddSkill addSkill = (IAddSkill)InstantiateClassByName(id);
+                
+                cardAddSkill.Add(addSkill);
             }
         }
 
@@ -197,8 +215,16 @@ namespace DefaultNamespace
                         target |= Enum.Parse<TargetType>(type);
 
                     List<ISkill> skills = cardBody[columns[3]];
-
-                    CardData cardData = new CardData(cost, target, skills, columns[3]);
+                    
+                    CardData cardData;
+                    if (columns[4] != "")
+                    {
+                        IAddSkill addSkill = (IAddSkill)InstantiateClassByName(columns[4]);
+                        cardData = new CardData(cost, target, skills, columns[3], addSkill);
+                    }
+                    else
+                        cardData = new CardData(cost, target, skills, columns[3]);
+                    
                     defaultDeckSetting[id].Add(cardData);
                 }
             }

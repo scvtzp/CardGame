@@ -1,13 +1,7 @@
 ID,코스트,타겟,몸통(Body),부가효과
 Player_1,,,,
-,1,Enemy/Me,card_0,
-,2,Me,card_1,
-,3,Enemy,card_2,
-,1,Enemy,card_3,
-,1,Enemy,card_0,
-,1,Me,card_4,
-,1,Enemy,card_5,
-,1,Enemy,card_6,
+,1,Enemy/Me,card_0,Twinspell
+,1,Enemy/Me,card_0,Combo
+,1,Enemy/Me,card_0,Lifesteal
 Monster_1,,,,
 ,1,Me,card_0,
-,1,Enemy,card_1,
